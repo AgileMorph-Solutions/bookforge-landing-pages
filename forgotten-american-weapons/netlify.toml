@@ -1,10 +1,9 @@
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "forgotten-american-weapons/.next"
 
 [build.environment]
   NODE_VERSION = "20"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
