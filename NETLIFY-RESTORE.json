@@ -91,5 +91,7 @@
       "locked_after": true
     }
   ],
-  "updated_at": "2026-07-21T13:22:28.275899+00:00"
+  "updated_at": "2026-07-21T13:53:00Z",
+  "github_repo": "https://github.com/satvik2131/bookforge-landing-pages",
+  "netlify_note": "All 8 sites linked with per-folder base directory; stop_builds=true"
 }

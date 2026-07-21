@@ -1,8 +1,10 @@
 # Netlify production restore points
 
-Updated: `2026-07-21T13:22:28.275899+00:00`
+Updated: `2026-07-21T13:53:00Z`
 
-These deploys were **locked** before/while linking the monorepo.
+GitHub monorepo: [satvik2131/bookforge-landing-pages](https://github.com/satvik2131/bookforge-landing-pages)
+
+These deploys were **locked** before/while linking the monorepo. Netlify continuous builds are **stopped** on all sites.
 
 ## Sites
 
