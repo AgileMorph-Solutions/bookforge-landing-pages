@@ -1,0 +1,44 @@
+{
+  "name": "forgotten-american-weapons-landing",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "sanity:dev": "sanity dev",
+    "sanity:deploy": "sanity deploy",
+    "sanity:schema": "sanity schema deploy",
+    "sanity:migrate": "sanity exec scripts/migrate-local-content-to-sanity.ts --with-user-token",
+    "upload-pdfs": "tsx scripts/upload-pdfs-to-blob.ts",
+    "upload-pdfs:netlify": "tsx scripts/upload-pdfs-to-netlify-blobs.ts"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9",
+    "@sanity/icons": "^3.8.0",
+    "@sanity/image-url": "^1.2.0",
+    "@vercel/blob": "^0.27.3",
+    "next": "^15.3.3",
+    "next-sanity": "^9.12.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sanity": "^3.99.0",
+    "stripe": "^18.2.1",
+    "styled-components": "^6.4.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@netlify/plugin-nextjs": "^5.15.12",
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.28.0",
+    "eslint-config-next": "^15.3.3",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
