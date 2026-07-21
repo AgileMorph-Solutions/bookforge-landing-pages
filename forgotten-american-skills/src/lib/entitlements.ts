@@ -7,13 +7,10 @@ import {
   getEntitledSlugsForPurchase,
 } from "./products.server";
 
-const DEFAULT_FILENAMES: Record<Exclude<ProductSlug, "bundle">, string> = {
-  "poor-man-recipe-bible": "poor-man-recipe-bible.pdf",
-  "1950s-grandma-cookbook": "1950s-grandma-cookbook.pdf",
-  "great-depression-survival": "great-depression-survival.pdf",
-  "cowboy-frontier": "cowboy-frontier.pdf",
-  "lost-diners-potlucks": "lost-diners-potlucks.pdf",
-};
+const DEFAULT_FILENAMES: Record<Exclude<ProductSlug, "bundle">, string> =
+  Object.fromEntries(
+    INDIVIDUAL_BOOKS.map((book) => [book.slug, book.pdfFilename])
+  ) as Record<Exclude<ProductSlug, "bundle">, string>;
 
 let cachedManifest: Record<string, string> | null | undefined;
 

@@ -1,8 +1,8 @@
 # Netlify production restore points
 
-Created: `2026-07-21T13:14:21.154090Z`
+Updated: `2026-07-21T13:22:28.275899+00:00`
 
-These deploys were **locked** before linking the monorepo. Restoring republishes the locked deploy and does **not** consume production-deploy credits the same way a new build does.
+These deploys were **locked** before/while linking the monorepo.
 
 ## Sites
 
@@ -15,14 +15,13 @@ These deploys were **locked** before linking the monorepo. Restoring republishes
 | `american-food-history` | `american-food-history` (`23415047-6744-43f7-9c75-290707a8d00c`) | americanfoodhistory.com | `6a5e4cbb6ea9bb6f69da68cb` | https://6a5e4cbb6ea9bb6f69da68cb--american-food-history.netlify.app |
 | `british-nostalgia` | `british-nostalgia` (`3c74014f-721b-44a4-9da7-0d1ebcb0dbe9`) | britishnostalgiastore.com | `6a5ddc945d55bf12f6983830` | https://6a5ddc945d55bf12f6983830--british-nostalgia.netlify.app |
 | `forgotten-american-weapons` | `forgotten-american-weapons` (`ce6dd42a-b125-4349-8c70-09d2cc5dcd85`) | forgottenamericanweapons.com | `6a5e4cbb316e8f67875f283c` | https://6a5e4cbb316e8f67875f283c--forgotten-american-weapons.netlify.app |
+| `forgotten-american-skills` | `forgotten-american-skills` (`8da0d09b-a235-4194-be3e-fb5c3d85f1d2`) | https://forgotten-american-skills.netlify.app | `6a5f721fc50b27399118a332` | https://6a5f721fc50b27399118a332--forgotten-american-skills.netlify.app |
 
-## Restore a site
+## Restore
 
 ```bash
 netlify api restoreSiteDeploy --data '{"site_id":"<SITE_ID>","deploy_id":"<DEPLOY_ID>"}'
 ```
-
-### Per-site commands
 
 **lost-american-memories**
 
@@ -64,4 +63,10 @@ netlify api restoreSiteDeploy --data '{"site_id":"3c74014f-721b-44a4-9da7-0d1ebc
 
 ```bash
 netlify api restoreSiteDeploy --data '{"site_id":"ce6dd42a-b125-4349-8c70-09d2cc5dcd85","deploy_id":"6a5e4cbb316e8f67875f283c"}'
+```
+
+**forgotten-american-skills**
+
+```bash
+netlify api restoreSiteDeploy --data '{"site_id":"8da0d09b-a235-4194-be3e-fb5c3d85f1d2","deploy_id":"6a5f721fc50b27399118a332"}'
 ```
