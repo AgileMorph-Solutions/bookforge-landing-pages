@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStore } from "@netlify/blobs";
 import { head } from "@vercel/blob";
 import { readFile } from "fs/promises";
 import path from "path";
@@ -20,8 +19,6 @@ export const dynamic = "force-dynamic";
 /** Large cookbook PDFs (30–70MB) need a long-running function. */
 export const maxDuration = 60;
 
-const NETLIFY_PDF_STORE = "cookbook-pdfs";
-
 function pdfFilenameFor(slug: string): string {
   return (
     INDIVIDUAL_BOOKS.find((b) => b.slug === slug)?.pdfFilename ?? `${slug}.pdf`
@@ -41,21 +38,6 @@ function pdfResponse(
       ...extraHeaders,
     },
   });
-}
-
-async function getNetlifyBlobPdfResponse(
-  slug: DownloadableSlug,
-  filename: string
-): Promise<NextResponse | null> {
-  try {
-    const store = getStore(NETLIFY_PDF_STORE);
-    const data = await store.get(slug, { type: "stream" });
-    if (!data) return null;
-    return pdfResponse(data as unknown as BodyInit, filename);
-  } catch (err) {
-    console.error("Netlify Blobs PDF read failed:", err);
-    return null;
-  }
 }
 
 async function getLocalPdfResponse(
@@ -155,7 +137,6 @@ export async function GET(
 
   const response =
     (await getSanityPdfResponse(downloadSlug, filename)) ??
-    (await getNetlifyBlobPdfResponse(downloadSlug, filename)) ??
     (await getVercelBlobPdfResponse(downloadSlug)) ??
     (await getLocalPdfResponse(downloadSlug, filename));
 

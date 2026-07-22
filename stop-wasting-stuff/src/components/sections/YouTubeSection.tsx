@@ -4,6 +4,7 @@ import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import { formatPrice, type Product } from "@/lib/products";
 import type { HomePageContent, SiteSettingsContent } from "@/lib/site-content";
+import { PageContainer } from "@/components/ui/PageContainer";
 
 interface YouTubeSectionProps {
   content: HomePageContent["youtube"];
@@ -18,7 +19,7 @@ export function YouTubeSection({
 }: YouTubeSectionProps) {
   return (
     <section id="sources" className="py-16 md:py-24 bg-cream">
-      <div className="w-full px-4 md:px-6">
+      <PageContainer>
         <p className="section-label text-center">{content.eyebrow}</p>
         <StarDivider className="max-w-xs mx-auto" />
         <VintageHeadline
@@ -61,7 +62,7 @@ export function YouTubeSection({
             label={`${content.purchaseCtaLabel} · ${formatPrice(bundle.price)}`}
           />
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

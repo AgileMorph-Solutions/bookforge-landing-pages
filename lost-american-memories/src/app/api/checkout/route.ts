@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { StripeConfigError, isStripeConfigured } from "@/lib/env";
 import type { ProductSlug } from "@/lib/products";
-import { getProductBySlugForCheckout } from "@/lib/products.server";
+import { getProductBySlugForCheckout, validatePdfsAvailableForPurchase } from "@/lib/products.server";
 import { getSiteUrl, getStripe } from "@/lib/stripe";
 
 function absoluteUrl(siteUrl: string, url: string): string {
@@ -23,6 +23,22 @@ export async function POST(request: NextRequest) {
     const product = await getProductBySlugForCheckout(productSlug);
     if (!product) {
       return NextResponse.json({ error: "Invalid product" }, { status: 400 });
+    }
+
+    const pdfCheck = await validatePdfsAvailableForPurchase(product.slug);
+    if (!pdfCheck.ok) {
+      const missing =
+        pdfCheck.missingTitles.length > 0
+          ? ` Missing: ${pdfCheck.missingTitles.join(", ")}.`
+          : "";
+      return NextResponse.json(
+        {
+          error: `This book's PDF is not available yet. Please check back soon.${missing}`,
+          code: "PDF_NOT_READY",
+          missingTitles: pdfCheck.missingTitles,
+        },
+        { status: 422 }
+      );
     }
 
     const stripe = getStripe();

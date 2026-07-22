@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageContainer } from "@/components/ui/PageContainer";
 import type { SiteSettingsContent, StatContent } from "@/lib/site-content";
 
 interface SocialProofProps {
@@ -18,8 +19,8 @@ export function SocialProof({ siteSettings }: SocialProofProps) {
 
   return (
     <section className="border-y-2 border-parchment-dark bg-parchment-texture">
-      <div className="w-full px-4 py-8 md:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <PageContainer className="py-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {stats.map((stat) => {
             const content = (
               <div className="card-parchment text-center py-6 px-4 border-2 border-navy/10">
@@ -50,7 +51,7 @@ export function SocialProof({ siteSettings }: SocialProofProps) {
             );
           })}
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

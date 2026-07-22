@@ -1,14 +1,24 @@
 import { createReadStream, existsSync } from "fs";
 import path from "path";
+import { createClient } from "@sanity/client";
 import { getCliClient } from "sanity/cli";
 import { costComparison, recipePreviews, siteConfig } from "../src/data/copy";
 import { faqItems } from "../src/data/faq";
 import { testimonials } from "../src/data/testimonials";
 import { fallbackHomePage, fallbackSiteSettings } from "../src/lib/site-content";
 import { ALL_PRODUCTS, INDIVIDUAL_BOOKS } from "../src/lib/products";
-import { apiVersion } from "../src/sanity/env";
+import { apiVersion, dataset, projectId } from "../src/sanity/env";
 
-const client = getCliClient({ apiVersion });
+const writeToken = process.env.SANITY_API_WRITE_TOKEN;
+const client = writeToken
+  ? createClient({
+      projectId,
+      dataset,
+      apiVersion,
+      token: writeToken,
+      useCdn: false,
+    })
+  : getCliClient({ apiVersion });
 const root = process.cwd();
 
 const coverFiles: Record<string, string> = {

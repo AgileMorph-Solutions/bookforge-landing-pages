@@ -23,6 +23,27 @@ function mergeDefined<T extends object>(
   return { ...fallback, ...Object.fromEntries(entries) } as T;
 }
 
+const PLACEHOLDER_SUBSCRIBERS = "Growing";
+
+function resolveSubscriberCount(
+  value: string | undefined,
+  fallback: string
+): string {
+  if (!value || value === PLACEHOLDER_SUBSCRIBERS) return fallback;
+  return value;
+}
+
+function mergeSiteSettings(
+  value: Partial<SiteSettingsContent> | null | undefined
+): SiteSettingsContent {
+  const merged = mergeDefined(fallbackSiteSettings, value);
+  merged.youtubeSubscribers = resolveSubscriberCount(
+    value?.youtubeSubscribers,
+    fallbackSiteSettings.youtubeSubscribers
+  );
+  return merged;
+}
+
 function mergeHomePage(
   value: Partial<HomePageContent> | null | undefined
 ): HomePageContent {
@@ -63,7 +84,17 @@ function mergeHomePage(
     youtube: {
       ...mergeDefined(fallbackHomePage.youtube, value.youtube),
       stats: value.youtube?.stats?.length
-        ? value.youtube.stats
+        ? value.youtube.stats.map((stat) =>
+            stat.label === "Subscribers"
+              ? {
+                  ...stat,
+                  value: resolveSubscriberCount(
+                    stat.value,
+                    fallbackHomePage.youtube.stats[0]?.value ?? "15K"
+                  ),
+                }
+              : stat
+          )
         : fallbackHomePage.youtube.stats,
     },
     guarantee: mergeDefined(fallbackHomePage.guarantee, value.guarantee),
@@ -85,7 +116,7 @@ export async function getSiteSettings(): Promise<SiteSettingsContent> {
       {},
       { cache: "no-store" }
     );
-    return mergeDefined(fallbackSiteSettings, settings);
+    return mergeSiteSettings(settings);
   } catch (error) {
     console.warn("Unable to fetch Sanity site settings; using local fallback.", error);
     return fallbackSiteSettings;

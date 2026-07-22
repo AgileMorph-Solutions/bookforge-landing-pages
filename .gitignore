@@ -8,6 +8,7 @@
 **/.netlify/
 **/.vercel/
 **/.env
+.env.stripe
 **/.env*.local
 **/*.pem
 **/npm-debug.log*
@@ -20,5 +21,8 @@
 **/next-env.d.ts
 **/coverage/
 
-# Product PDFs live in Netlify Blobs / local books/ — do not commit
+# Product PDFs live in Vercel Blob / local assets/ — do not commit
 **/assets/*.pdf
+
+# Source book PDFs/covers — not used at runtime (Sanity / site assets/)
+/books/

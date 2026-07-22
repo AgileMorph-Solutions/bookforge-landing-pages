@@ -1,6 +1,6 @@
 /**
- * Add each channel site's production origins (Netlify + apex + www) as CORS
- * origins (with credentials) on its Sanity project.
+ * Add each channel site's production origins (apex + www) as CORS origins
+ * (with credentials) on its Sanity project.
  *
  * Note: older Sanity CLI ignores --project-id for cors commands, so we run from each
  * site directory with NEXT_PUBLIC_SANITY_PROJECT_ID set in the environment.
@@ -22,10 +22,17 @@ type SiteCors = {
 
 const SITES: SiteCors[] = [
   {
+    slug: "lost-american-memories",
+    projectId: "pu1kusrz",
+    origins: [
+      "https://lostamericanmemories.com",
+      "https://www.lostamericanmemories.com",
+    ],
+  },
+  {
     slug: "stop-wasting-stuff",
     projectId: "x0a4syb1",
     origins: [
-      "https://stop-wasting-stuff.netlify.app",
       "https://stopwastingstuff.com",
       "https://www.stopwastingstuff.com",
     ],
@@ -34,7 +41,6 @@ const SITES: SiteCors[] = [
     slug: "forgotten-american-survival",
     projectId: "ksy60hww",
     origins: [
-      "https://forgotten-american-survival.netlify.app",
       "https://forgottenamericansurvival.com",
       "https://www.forgottenamericansurvival.com",
     ],
@@ -43,7 +49,6 @@ const SITES: SiteCors[] = [
     slug: "carlyfe",
     projectId: "fgynawmf",
     origins: [
-      "https://carlyfe.netlify.app",
       "https://carlyfeyoutube.com",
       "https://www.carlyfeyoutube.com",
     ],
@@ -52,7 +57,6 @@ const SITES: SiteCors[] = [
     slug: "american-food-history",
     projectId: "iji68mld",
     origins: [
-      "https://american-food-history.netlify.app",
       "https://americanfoodhistory.com",
       "https://www.americanfoodhistory.com",
     ],
@@ -61,7 +65,6 @@ const SITES: SiteCors[] = [
     slug: "british-nostalgia",
     projectId: "n5gutrbv",
     origins: [
-      "https://british-nostalgia.netlify.app",
       "https://britishnostalgiastore.com",
       "https://www.britishnostalgiastore.com",
     ],
@@ -70,9 +73,16 @@ const SITES: SiteCors[] = [
     slug: "forgotten-american-weapons",
     projectId: "1gz3wplt",
     origins: [
-      "https://forgotten-american-weapons.netlify.app",
       "https://forgottenamericanweapons.com",
       "https://www.forgottenamericanweapons.com",
+    ],
+  },
+  {
+    slug: "forgotten-american-skills",
+    projectId: "lp0hbjba",
+    origins: [
+      "https://forgottenamericanskills.com",
+      "https://www.forgottenamericanskills.com",
     ],
   },
 ];
@@ -155,7 +165,7 @@ function assertNoCrossContamination(site: SiteCors, listed: string[]) {
 
 function main() {
   console.log(
-    "Adding Sanity CORS origins (Netlify + apex + www) for 6 channel sites...\n"
+    "Adding Sanity CORS origins (apex + www) for 8 channel sites...\n"
   );
 
   for (const site of SITES) {

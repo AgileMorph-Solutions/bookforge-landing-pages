@@ -1,3 +1,5 @@
+import { access } from "fs/promises";
+import path from "path";
 import {
   ALL_PRODUCTS,
   BUNDLE,
@@ -7,7 +9,11 @@ import {
 } from "@/lib/products";
 import { isSanityEnabled } from "@/lib/cms";
 import { client } from "@/sanity/lib/client";
-import { PRODUCT_DOWNLOAD_QUERY, PRODUCTS_QUERY } from "@/sanity/lib/queries";
+import {
+  PRODUCT_DOWNLOAD_QUERY,
+  PRODUCTS_PDF_AVAILABILITY_QUERY,
+  PRODUCTS_QUERY,
+} from "@/sanity/lib/queries";
 
 type SanityProduct = Partial<Omit<Product, "slug">> & {
   slug?: string;
@@ -35,6 +41,13 @@ function mergeStringArray(
 function mergeProduct(base: Product, sanityProduct?: SanityProduct): Product {
   if (!sanityProduct) return base;
 
+  const rawCover = sanityProduct.coverImage ?? base.coverImage;
+  // Prefer optimized local JPEGs when Sanity still points at old PNG paths.
+  const coverImage = rawCover.replace(
+    /^(\/images\/covers\/.+)\.png$/i,
+    "$1.jpg"
+  );
+
   return {
     ...base,
     title: sanityProduct.title ?? base.title,
@@ -42,7 +55,7 @@ function mergeProduct(base: Product, sanityProduct?: SanityProduct): Product {
     subtitle: sanityProduct.subtitle ?? base.subtitle,
     price: sanityProduct.price ?? base.price,
     compareAt: sanityProduct.compareAt ?? base.compareAt,
-    coverImage: sanityProduct.coverImage ?? base.coverImage,
+    coverImage,
     pdfFilename: sanityProduct.pdfFilename ?? base.pdfFilename,
     recipeCount: sanityProduct.recipeCount ?? base.recipeCount,
     era: sanityProduct.era ?? base.era,
@@ -142,5 +155,58 @@ export async function getProductDownloadAsset(
     console.warn("Unable to fetch Sanity PDF asset; using local fallback.", error);
     return null;
   }
+}
+
+async function localPdfExists(
+  slug: Exclude<ProductSlug, "bundle">
+): Promise<boolean> {
+  const book = INDIVIDUAL_BOOKS.find((item) => item.slug === slug);
+  if (!book?.pdfFilename) return false;
+
+  try {
+    await access(path.join(process.cwd(), "assets", book.pdfFilename));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function isPdfAvailableForSlug(
+  slug: Exclude<ProductSlug, "bundle">
+): Promise<boolean> {
+  if (isSanityEnabled()) {
+    try {
+      const rows = await client.fetch<{ slug?: string; hasPdf?: boolean }[]>(
+        PRODUCTS_PDF_AVAILABILITY_QUERY,
+        {},
+        { cache: "no-store" }
+      );
+      const row = rows.find((item) => item.slug === slug);
+      if (row?.hasPdf) return true;
+    } catch (error) {
+      console.warn(
+        "Unable to check Sanity PDF availability; falling back to local.",
+        error
+      );
+    }
+  }
+
+  return localPdfExists(slug);
+}
+
+export async function validatePdfsAvailableForPurchase(
+  slug: ProductSlug
+): Promise<{ ok: boolean; missingTitles: string[] }> {
+  const entitled = await getEntitledSlugsForPurchase(slug);
+  const missingTitles: string[] = [];
+
+  for (const bookSlug of entitled) {
+    if (!(await isPdfAvailableForSlug(bookSlug))) {
+      const book = INDIVIDUAL_BOOKS.find((item) => item.slug === bookSlug);
+      missingTitles.push(book?.shortTitle ?? book?.title ?? bookSlug);
+    }
+  }
+
+  return { ok: missingTitles.length === 0, missingTitles };
 }
 

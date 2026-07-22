@@ -2,6 +2,7 @@ import { Accordion } from "@/components/ui/Accordion";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import type { Product } from "@/lib/products";
+import { PageContainer } from "@/components/ui/PageContainer";
 import {
   formatCommerceCopy,
   type HomePageContent,
@@ -21,7 +22,7 @@ export function FAQ({ content, individualBooks, bundle }: FAQProps) {
 
   return (
     <section id="faq" className="py-16 md:py-24 bg-cream">
-      <div className="w-full px-4 md:px-6">
+      <PageContainer>
         <p className="section-label text-center">{content.eyebrow}</p>
         <StarDivider className="max-w-xs mx-auto" />
         <VintageHeadline
@@ -33,7 +34,7 @@ export function FAQ({ content, individualBooks, bundle }: FAQProps) {
         <div className="mt-10 mx-auto max-w-3xl card-parchment p-6 border-2 border-parchment-dark">
           <Accordion items={items} />
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

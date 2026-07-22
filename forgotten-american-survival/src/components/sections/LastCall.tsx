@@ -1,4 +1,5 @@
 import { BuyButton } from "@/components/commerce/BuyButton";
+import { PageContainer } from "@/components/ui/PageContainer";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import { formatPrice, type Product } from "@/lib/products";
@@ -25,15 +26,15 @@ export function LastCall({
   return (
     <section className="bg-wood-surface">
       <div className="bg-navy border-vintage-top py-16 md:py-20">
-        <div className="w-full px-4 md:px-6 text-center">
+        <PageContainer className="text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-gold mb-4">
             {content.eyebrow}
           </p>
-          <VintageHeadline as="h2" className="text-3xl md:text-4xl text-cream">
+          <VintageHeadline as="h2" className="section-title text-cream">
             {content.headline}
           </VintageHeadline>
           <StarDivider className="max-w-xs mx-auto my-6 [&::before]:bg-gradient-to-r [&::after]:bg-gradient-to-l from-gold/50" />
-          <p className="text-cream/80 leading-relaxed">
+          <p className="text-cream/80 leading-relaxed max-w-2xl mx-auto">
             {formatCommerceCopy(content.body, bundle, individualBooks)}
           </p>
           <p className="mt-4 text-sm text-cream/60 uppercase tracking-wider">
@@ -47,7 +48,7 @@ export function LastCall({
               label={`${content.ctaLabel} · ${formatPrice(bundle.price)}`}
             />
           </div>
-        </div>
+        </PageContainer>
       </div>
     </section>
   );

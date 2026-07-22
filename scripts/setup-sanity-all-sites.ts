@@ -17,6 +17,11 @@ type SiteSanityConfig = {
 };
 
 const SITES: SiteSanityConfig[] = [
+  {
+    slug: "lost-american-memories",
+    projectId: "pu1kusrz",
+    projectName: "lost-american-memories",
+  },
   { slug: "stop-wasting-stuff", projectId: "x0a4syb1", projectName: "stop-wasting-stuff" },
   {
     slug: "forgotten-american-survival",
@@ -56,7 +61,9 @@ function parseEnvFile(filePath: string): Record<string, string> {
 }
 
 function loadTemplateEnv(): Record<string, string> {
-  return parseEnvFile(LAM_ENV);
+  const stripeEnv = parseEnvFile(path.join(ROOT, ".env.stripe"));
+  const sanityEnv = parseEnvFile(LAM_ENV);
+  return { ...stripeEnv, ...sanityEnv };
 }
 
 function run(cmd: string, cwd: string, env: Record<string, string> = {}) {
@@ -96,9 +103,7 @@ function writeEnvLocal(slug: string, projectId: string, template: Record<string,
     "NEXT_PUBLIC_SANITY_API_VERSION=2026-07-15",
     `SANITY_API_READ_TOKEN=${template.SANITY_API_READ_TOKEN ?? ""}`,
     "",
-    "# Stripe",
-    `STRIPE_SECRET_KEY=${existing.STRIPE_SECRET_KEY ?? template.STRIPE_SECRET_KEY ?? ""}`,
-    `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${existing.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? template.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ""}`,
+    "# Stripe webhook (account keys in repo-root .env.stripe)",
     `STRIPE_WEBHOOK_SECRET=${existing.STRIPE_WEBHOOK_SECRET ?? template.STRIPE_WEBHOOK_SECRET ?? ""}`,
     "",
     "# Downloads",

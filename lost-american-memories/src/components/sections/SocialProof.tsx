@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageContainer } from "@/components/ui/PageContainer";
 import type { SiteSettingsContent, StatContent } from "@/lib/site-content";
 
 interface SocialProofProps {
@@ -17,19 +18,19 @@ export function SocialProof({ siteSettings }: SocialProofProps) {
   ];
 
   return (
-    <section className="border-y-2 border-parchment-dark bg-parchment-texture">
-      <div className="w-full px-4 py-8 md:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <section className="border-y border-parchment-dark bg-parchment">
+      <PageContainer className="py-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {stats.map((stat) => {
             const content = (
-              <div className="card-parchment text-center py-6 px-4 border-2 border-navy/10">
-                <p className="text-red text-xs mb-1 tracking-widest" aria-hidden>
+              <div className="card-parchment border border-[#e3beb8] px-4 py-6 text-center">
+                <p className="mb-1 text-xs tracking-widest text-red" aria-hidden>
                   ★★★★★
                 </p>
-                <p className="text-2xl md:text-3xl font-display font-bold text-navy">
+                <p className="font-display text-2xl font-bold text-ink md:text-3xl">
                   {stat.value}
                 </p>
-                <p className="mt-1 text-xs uppercase tracking-widest text-navy/60">
+                <p className="mt-1 text-xs uppercase tracking-widest text-[#5a403c]">
                   {stat.label}
                 </p>
               </div>
@@ -41,7 +42,7 @@ export function SocialProof({ siteSettings }: SocialProofProps) {
                 href={stat.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block hover:opacity-90 transition-opacity"
+                className="block transition-opacity hover:opacity-90"
               >
                 {content}
               </Link>
@@ -50,7 +51,7 @@ export function SocialProof({ siteSettings }: SocialProofProps) {
             );
           })}
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

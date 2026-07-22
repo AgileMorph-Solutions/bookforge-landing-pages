@@ -8,6 +8,7 @@ export const siteConfig = {
   guaranteeDays: 30,
   firstEditionSpotsLeft: 180,
   bundlePriceEndAt: 5000,
+  contentUnitLabel: "recipes",
 };
 
 export const heroCopy = {

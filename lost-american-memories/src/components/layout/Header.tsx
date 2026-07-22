@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BuyButton } from "@/components/commerce/BuyButton";
 import { BrandSeal } from "@/components/ui/BrandSeal";
+import { PageContainer } from "@/components/ui/PageContainer";
 import { formatPrice, type Product } from "@/lib/products";
 import type { NavLinkContent, SiteSettingsContent } from "@/lib/site-content";
 
@@ -12,45 +13,41 @@ interface HeaderProps {
 
 export function Header({ siteSettings, navLinks, bundle }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 bg-navy text-cream shadow-lg border-vintage-bottom">
-      <div className="flex w-full items-center gap-4 px-4 py-3 md:px-6">
-        <Link
-          href="/"
-          className="mr-auto flex shrink-0 items-center gap-3 leading-tight"
-        >
-          <BrandSeal size={36} />
+    <header className="sticky top-0 z-40 border-b border-red bg-navy text-cream">
+      <PageContainer className="flex items-center justify-between gap-4 py-4">
+        <Link href="/" className="flex shrink-0 items-center gap-4 leading-tight">
+          <BrandSeal size={40} logoUrl={siteSettings.logo} />
           <div className="flex flex-col">
-            <span className="font-display text-base md:text-lg font-bold tracking-wide uppercase">
+            <span className="font-display text-lg font-bold uppercase leading-tight tracking-widest text-cream md:text-xl">
               {siteSettings.name}
             </span>
-            <span className="text-[0.65rem] text-cream/70 uppercase tracking-[0.2em]">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-gold-light">
               {siteSettings.tagline}
             </span>
           </div>
         </Link>
-        <nav className="hidden md:flex items-center gap-1 text-xs uppercase tracking-widest">
+        <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link, i) => (
-            <span key={link.href} className="flex items-center">
-              {i > 0 && (
-                <span className="text-red mx-2 text-[0.5rem]" aria-hidden>
-                  ★
-                </span>
-              )}
-              <a
-                href={link.href}
-                className="text-cream/80 hover:text-cream transition-colors"
-              >
-                {link.label}
-              </a>
-            </span>
+            <a
+              key={link.href}
+              href={link.href}
+              className={`font-body text-sm font-semibold uppercase tracking-widest transition-colors ${
+                i === 0
+                  ? "border-b border-gold pb-1 text-gold-light"
+                  : "text-cream/70 hover:text-cream"
+              }`}
+            >
+              {link.label}
+            </a>
           ))}
         </nav>
         <BuyButton
           productSlug="bundle"
+          variant="header"
           label={`Get the Library · ${formatPrice(bundle.price)}`}
-          className="text-xs py-2 px-3 md:text-sm md:px-4 shrink-0"
+          className="shrink-0"
         />
-      </div>
+      </PageContainer>
     </header>
   );
 }

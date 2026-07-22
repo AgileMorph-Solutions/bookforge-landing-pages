@@ -35,24 +35,16 @@ export function CountdownBanner({ label, prefix }: CountdownBannerProps) {
   const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <div className="bg-red text-cream text-center text-xs md:text-sm py-2 px-4 relative">
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: "url(/images/textures/parchment-noise.svg)",
-          backgroundSize: "100px",
-        }}
-        aria-hidden
-      />
-      <span className="relative font-display font-bold uppercase tracking-widest">
-        {label}
-      </span>
-      <span className="relative mx-2 opacity-60" aria-hidden>
+    <div className="relative z-50 bg-red px-4 py-2 text-center font-body text-[12px] font-semibold uppercase tracking-widest text-white">
+      <span>{label}</span>
+      <span className="mx-2" aria-hidden>
         ★
       </span>
-      <span className="relative">{prefix} </span>
-      <span className="relative font-mono font-bold text-gold-light">
-        {pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}
+      <span>
+        {prefix}{" "}
+        <span className="font-bold">
+          {pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}
+        </span>
       </span>
     </div>
   );

@@ -1,4 +1,4 @@
-import { StarDivider } from "@/components/ui/StarDivider";
+import { PageContainer } from "@/components/ui/PageContainer";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import type { HomePageContent } from "@/lib/site-content";
 
@@ -8,50 +8,49 @@ interface TestimonialsProps {
 
 export function Testimonials({ content }: TestimonialsProps) {
   return (
-    <section className="py-16 md:py-24 bg-parchment-texture">
-      <div className="w-full px-4 md:px-6">
-        <p className="section-label text-center">{content.eyebrow}</p>
-        <StarDivider className="max-w-xs mx-auto" />
-        <VintageHeadline
-          as="h2"
-          className="mt-4 text-center text-3xl md:text-4xl"
-        >
-          {content.headline}
-        </VintageHeadline>
-        <p className="mt-4 text-center text-navy/70">
-          {content.body}
-        </p>
+    <section className="bg-cream py-20 md:py-28">
+      <PageContainer>
+        <div className="mb-16 text-center">
+          <span className="mb-4 block text-4xl text-red" aria-hidden>
+            &ldquo;
+          </span>
+          <p className="section-label">{content.eyebrow}</p>
+          <VintageHeadline as="h2" className="section-title mt-2">
+            {content.headline}
+          </VintageHeadline>
+          <p className="landing-prose mt-4">{content.body}</p>
+        </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {content.items.map((t) => (
             <blockquote
               key={t.author}
-              className="card-parchment p-6 flex flex-col border-2 border-parchment-dark"
+              className="flex h-full flex-col border border-[#e3beb8] bg-white p-8 italic"
             >
-              <span
-                className="text-red font-display text-4xl leading-none"
-                aria-hidden
+              <div
+                className="mb-2 text-sm text-red not-italic"
+                aria-label={`${t.rating} stars`}
               >
-                &ldquo;
-              </span>
-              <div className="text-red text-sm mb-2" aria-label={`${t.rating} stars`}>
                 {"★".repeat(t.rating)}
               </div>
-              <p className="text-navy/80 leading-relaxed flex-1 italic text-sm">
+              <p className="mb-6 flex-grow text-lg leading-relaxed text-ink">
                 {t.quote}
               </p>
-              <footer className="mt-4 pt-4 border-t border-dashed border-parchment-dark">
-                <p className="font-display font-bold text-navy uppercase text-sm">
-                  {t.author}
-                </p>
-                <p className="text-xs text-navy/60 mt-1">
-                  {t.location} &middot; {t.source}
-                </p>
+              <footer className="flex items-center gap-4 border-t border-[#e3beb8] pt-6 not-italic">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-parchment font-display text-sm font-bold text-red">
+                  {t.author.charAt(0)}
+                </div>
+                <div>
+                  <span className="block font-bold text-ink">{t.author}</span>
+                  <span className="text-xs uppercase tracking-widest text-[#5a403c]">
+                    {t.location} &middot; {t.source}
+                  </span>
+                </div>
               </footer>
             </blockquote>
           ))}
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

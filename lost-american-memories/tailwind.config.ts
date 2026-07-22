@@ -9,36 +9,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Sampled from Lost American Memories cookbook cover art
         navy: {
           DEFAULT: "#1a2b44",
-          dark: "#111a2e",
+          dark: "#121c2e",
         },
         red: {
-          DEFAULT: "#8b1d1d",
-          dark: "#6d1414",
+          DEFAULT: "#8b1a1a",
+          dark: "#6b1212",
+          container: "#8b1a1a",
         },
-        cream: "#f2e7d5",
+        cream: "#ede4d0",
         parchment: {
-          DEFAULT: "#e8d9c5",
-          dark: "#d4c4ad",
+          DEFAULT: "#e8d9c3",
+          dark: "#d4c4a8",
         },
         gold: {
-          DEFAULT: "#c9a227",
-          light: "#e0bc4a",
+          DEFAULT: "#b8953e",
+          light: "#d4b45c",
         },
         wood: {
-          DEFAULT: "#5c3d2e",
-          light: "#6b4a35",
-          dark: "#4a3025",
+          DEFAULT: "#5c4030",
+          light: "#6e4e3a",
+          dark: "#3f2c20",
         },
+        ink: "#1a1510",
       },
       fontFamily: {
-        display: ["var(--font-roboto-slab)", "Georgia", "serif"],
-        body: ["var(--font-source-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-libre-caslon)", "Georgia", "serif"],
+        body: ["var(--font-work-sans)", "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        container: "1280px",
       },
       boxShadow: {
-        book: "0 12px 40px rgba(26, 43, 68, 0.25), 0 4px 12px rgba(92, 61, 46, 0.2)",
-        vintage: "inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 16px rgba(26, 43, 68, 0.12)",
+        book: "0 14px 36px rgba(26, 43, 68, 0.28), 0 4px 12px rgba(92, 64, 48, 0.2)",
+        vintage: "inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 16px rgba(26, 43, 68, 0.12)",
       },
     },
   },

@@ -1,5 +1,5 @@
 import { BuyButton } from "@/components/commerce/BuyButton";
-import { StarDivider } from "@/components/ui/StarDivider";
+import { PageContainer } from "@/components/ui/PageContainer";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import { formatPrice, type Product } from "@/lib/products";
 import {
@@ -23,32 +23,48 @@ export function LastCall({
   individualBooks,
 }: LastCallProps) {
   return (
-    <section className="bg-wood-surface">
-      <div className="bg-navy border-vintage-top py-16 md:py-20">
-        <div className="w-full px-4 md:px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold mb-4">
-            {content.eyebrow}
-          </p>
-          <VintageHeadline as="h2" className="text-3xl md:text-4xl text-cream">
-            {content.headline}
-          </VintageHeadline>
-          <StarDivider className="max-w-xs mx-auto my-6 [&::before]:bg-gradient-to-r [&::after]:bg-gradient-to-l from-gold/50" />
-          <p className="text-cream/80 leading-relaxed">
-            {formatCommerceCopy(content.body, bundle, individualBooks)}
-          </p>
-          <p className="mt-4 text-sm text-cream/60 uppercase tracking-wider">
-            {formatContentTemplate(content.spotsLine, {
-              spots: siteSettings.firstEditionSpotsLeft,
-            })}
-          </p>
-          <div className="mt-8">
-            <BuyButton
-              productSlug="bundle"
-              label={`${content.ctaLabel} · ${formatPrice(bundle.price)}`}
-            />
+    <section className="relative overflow-hidden bg-navy py-20 text-white md:py-28">
+      <PageContainer className="relative z-10 text-center">
+        <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-gold-light">
+          {content.eyebrow}
+        </p>
+        <VintageHeadline
+          as="h2"
+          className="mb-6 text-4xl font-bold text-cream md:text-5xl"
+        >
+          {content.headline}
+        </VintageHeadline>
+        <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-cream/75">
+          {formatCommerceCopy(content.body, bundle, individualBooks)}
+        </p>
+
+        <div className="mb-8 inline-block border border-cream/15 bg-cream/5 p-8 md:p-12">
+          <div className="mb-2 text-sm font-bold uppercase tracking-[0.3em] text-gold-light">
+            Complete Library Bundle
+          </div>
+          <div className="mb-8 font-display text-5xl text-cream md:text-6xl">
+            {formatPrice(bundle.price)}{" "}
+            <span className="text-2xl text-cream/40 line-through">
+              {formatPrice(bundle.compareAt)}
+            </span>
+          </div>
+          <BuyButton
+            productSlug="bundle"
+            label={content.ctaLabel}
+            className="px-12 py-5 text-base shadow-2xl hover:scale-105"
+          />
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-8 text-xs uppercase tracking-widest text-cream/55">
+            <span>Instant PDF Access</span>
+            <span>Lifetime Updates</span>
           </div>
         </div>
-      </div>
+
+        <p className="text-sm uppercase tracking-wider text-cream/60">
+          {formatContentTemplate(content.spotsLine, {
+            spots: siteSettings.firstEditionSpotsLeft,
+          })}
+        </p>
+      </PageContainer>
     </section>
   );
 }

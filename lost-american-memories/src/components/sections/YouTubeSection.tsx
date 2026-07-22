@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BuyButton } from "@/components/commerce/BuyButton";
+import { PageContainer } from "@/components/ui/PageContainer";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import { formatPrice, type Product } from "@/lib/products";
@@ -17,30 +18,27 @@ export function YouTubeSection({
   bundle,
 }: YouTubeSectionProps) {
   return (
-    <section id="sources" className="py-16 md:py-24 bg-cream">
-      <div className="w-full px-4 md:px-6">
+    <section id="sources" className="bg-cream py-20 md:py-28">
+      <PageContainer>
         <p className="section-label text-center">{content.eyebrow}</p>
-        <StarDivider className="max-w-xs mx-auto" />
-        <VintageHeadline
-          as="h2"
-          className="mt-4 text-center text-3xl md:text-4xl"
-        >
+        <StarDivider className="mx-auto max-w-xs" />
+        <VintageHeadline as="h2" className="section-title mt-4 text-center">
           {content.headline}
         </VintageHeadline>
-        <p className="mt-6 text-center text-navy/80 max-w-3xl mx-auto leading-relaxed">
+        <p className="landing-prose mx-auto mt-6 max-w-3xl text-center">
           {content.body}
         </p>
 
-        <div className="mt-10 grid grid-cols-3 gap-4 max-w-lg mx-auto">
+        <div className="mx-auto mt-10 grid max-w-lg grid-cols-3 gap-4">
           {content.stats.map((stat) => (
             <div
               key={stat.label}
-              className="card-parchment text-center py-4 border-2 border-navy/10"
+              className="card-parchment border border-[#e3beb8] py-4 text-center"
             >
-              <p className="text-xl md:text-2xl font-display font-bold text-navy">
+              <p className="font-display text-xl font-bold text-ink md:text-2xl">
                 {stat.value}
               </p>
-              <p className="text-[0.65rem] uppercase tracking-widest text-navy/60 mt-1">
+              <p className="mt-1 text-[0.65rem] uppercase tracking-widest text-[#5a403c]">
                 {stat.label}
               </p>
             </div>
@@ -61,7 +59,7 @@ export function YouTubeSection({
             label={`${content.purchaseCtaLabel} · ${formatPrice(bundle.price)}`}
           />
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

@@ -1,3 +1,4 @@
+import { PageContainer } from "@/components/ui/PageContainer";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import type { HomePageContent } from "@/lib/site-content";
@@ -8,22 +9,22 @@ interface GuaranteeProps {
 
 export function Guarantee({ content }: GuaranteeProps) {
   return (
-    <section className="py-16 md:py-24 bg-cream">
-      <div className="w-full px-4 md:px-6 text-center">
+    <section className="bg-cream py-20 md:py-28">
+      <PageContainer className="text-center">
         <p className="section-label">{content.eyebrow}</p>
-        <StarDivider className="max-w-xs mx-auto" />
+        <StarDivider className="mx-auto max-w-xs" />
         <div className="panel-certificate mt-6 text-left md:text-center">
-          <VintageHeadline as="h2" className="text-2xl md:text-3xl text-cream">
+          <VintageHeadline as="h2" className="text-2xl text-cream md:text-3xl">
             {content.headline}
           </VintageHeadline>
-          <p className="mt-6 text-cream/85 leading-relaxed text-lg">
+          <p className="mt-6 text-lg leading-relaxed text-cream/85">
             {content.body}
           </p>
-          <p className="mt-6 text-sm text-gold uppercase tracking-widest">
+          <p className="mt-6 text-sm uppercase tracking-widest text-gold">
             {content.note}
           </p>
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

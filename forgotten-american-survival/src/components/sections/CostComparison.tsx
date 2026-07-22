@@ -1,3 +1,4 @@
+import { PageContainer } from "@/components/ui/PageContainer";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import { formatPrice, type Product } from "@/lib/products";
@@ -14,16 +15,13 @@ interface CostComparisonProps {
 export function CostComparison({ content, bundle }: CostComparisonProps) {
   return (
     <section id="math" className="py-16 md:py-24 bg-cream">
-      <div className="w-full px-4 md:px-6">
+      <PageContainer>
         <p className="section-label text-center">{content.eyebrow}</p>
         <StarDivider className="max-w-xs mx-auto" />
-        <VintageHeadline
-          as="h2"
-          className="mt-4 text-center text-3xl md:text-4xl"
-        >
+        <VintageHeadline as="h2" className="section-title mt-4 text-center">
           {content.headline}
         </VintageHeadline>
-        <p className="mt-4 text-center text-navy/70 max-w-2xl mx-auto">
+        <p className="landing-prose mt-4 mx-auto max-w-2xl text-center text-navy/70">
           {content.body}
         </p>
 
@@ -78,7 +76,7 @@ export function CostComparison({ content, bundle }: CostComparisonProps) {
             price: formatPrice(bundle.price),
           })}
         </p>
-      </div>
+      </PageContainer>
     </section>
   );
 }

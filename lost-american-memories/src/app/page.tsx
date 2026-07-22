@@ -35,6 +35,7 @@ export default async function HomePage() {
         content={homePage.whatsInside}
         individualBooks={individualBooks}
         bundle={bundle}
+        contentUnitLabel={siteSettings.contentUnitLabel}
       />
       <RecipePreviews content={homePage.recipePreviews} />
       <YouTubeSection

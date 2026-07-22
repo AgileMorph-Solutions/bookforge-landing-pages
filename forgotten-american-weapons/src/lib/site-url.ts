@@ -27,16 +27,8 @@ function normalizeOrigin(raw: string): string | null {
   }
 }
 
-/** True on hosted builds/deploys where a localhost SITE_URL would be wrong. */
+/** True in production where a localhost SITE_URL would be wrong. */
 function shouldIgnoreLocalhostEnv(): boolean {
-  const context = process.env.CONTEXT;
-  if (
-    context === "production" ||
-    context === "deploy-preview" ||
-    context === "branch-deploy"
-  ) {
-    return true;
-  }
   return process.env.NODE_ENV === "production";
 }
 
@@ -94,8 +86,6 @@ export function getSiteUrl(request?: NextRequest): string {
 
   const envCandidates: Array<string | null | undefined> = [
     process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.URL, // Netlify primary site URL
-    process.env.DEPLOY_PRIME_URL, // Netlify deploy URL
     process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : null,

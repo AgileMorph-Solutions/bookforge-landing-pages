@@ -64,8 +64,10 @@ export interface SiteSettingsContent {
   guaranteeDays: number;
   firstEditionSpotsLeft: number;
   bundlePriceEndAt: number;
+  contentUnitLabel: string;
   seoTitle: string;
   seoDescription: string;
+  logo?: string;
   ogImage?: string;
 }
 

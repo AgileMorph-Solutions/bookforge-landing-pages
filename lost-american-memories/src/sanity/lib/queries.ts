@@ -37,6 +37,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     bundlePriceEndAt,
     seoTitle,
     seoDescription,
+    "logo": logo.asset->url,
     "ogImage": ogImage.asset->url
   }
 `);
@@ -97,4 +98,12 @@ export const PRODUCT_DOWNLOAD_QUERY = defineQuery(`
     "pdfAssetId": pdfFile.asset->_id
   }
 `);
+
+export const PRODUCTS_PDF_AVAILABILITY_QUERY = defineQuery(`
+  *[_type == "product" && defined(slug.current)] {
+    "slug": slug.current,
+    "hasPdf": defined(pdfFile.asset->_id)
+  }
+`);
+
 

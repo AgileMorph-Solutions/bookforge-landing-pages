@@ -101,3 +101,11 @@ export const PRODUCT_DOWNLOAD_QUERY = defineQuery(`
   }
 `);
 
+export const PRODUCTS_PDF_AVAILABILITY_QUERY = defineQuery(`
+  *[_type == "product" && defined(slug.current)] {
+    "slug": slug.current,
+    "hasPdf": defined(pdfFile.asset->_id)
+  }
+`);
+
+

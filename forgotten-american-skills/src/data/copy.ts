@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Forgotten American Skills",
   tagline: "A Master Skills Library",
   youtubeUrl: "https://www.youtube.com/channel/UCM9Zhl9K6uCkV3RkcmiYkkQ",
-  youtubeSubscribers: "Growing",
+  youtubeSubscribers: "15K",
   averageRating: "4.9",
   readerCount: "4,820+",
   guaranteeDays: 30,

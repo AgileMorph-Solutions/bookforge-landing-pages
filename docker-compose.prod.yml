@@ -1,0 +1,130 @@
+# Production stack for all Bookforge landing sites.
+# Usage: docker compose -f docker-compose.prod.yml up -d --build
+#
+# Stripe account keys live in ./.env.stripe (shared). Each site .env holds
+# site-specific values including STRIPE_WEBHOOK_SECRET.
+
+x-landing-service: &landing-service
+  restart: unless-stopped
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  networks:
+    - landing
+
+services:
+  lost-american-memories:
+    <<: *landing-service
+    container_name: landing-lost-american-memories
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: lost-american-memories
+    env_file:
+      - ./.env.stripe
+      - ./lost-american-memories/.env
+    ports:
+      - "127.0.0.1:3001:3000"
+
+  stop-wasting-stuff:
+    <<: *landing-service
+    container_name: landing-stop-wasting-stuff
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: stop-wasting-stuff
+    env_file:
+      - ./.env.stripe
+      - ./stop-wasting-stuff/.env
+    ports:
+      - "127.0.0.1:3002:3000"
+
+  forgotten-american-survival:
+    <<: *landing-service
+    container_name: landing-forgotten-american-survival
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: forgotten-american-survival
+    env_file:
+      - ./.env.stripe
+      - ./forgotten-american-survival/.env
+    ports:
+      - "127.0.0.1:3003:3000"
+
+  carlyfe:
+    <<: *landing-service
+    container_name: landing-carlyfe
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: carlyfe
+    env_file:
+      - ./.env.stripe
+      - ./carlyfe/.env
+    ports:
+      - "127.0.0.1:3004:3000"
+
+  american-food-history:
+    <<: *landing-service
+    container_name: landing-american-food-history
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: american-food-history
+    env_file:
+      - ./.env.stripe
+      - ./american-food-history/.env
+    ports:
+      - "127.0.0.1:3005:3000"
+
+  forgotten-american-skills:
+    <<: *landing-service
+    container_name: landing-forgotten-american-skills
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: forgotten-american-skills
+    env_file:
+      - ./.env.stripe
+      - ./forgotten-american-skills/.env
+    ports:
+      - "127.0.0.1:3006:3000"
+
+  forgotten-american-weapons:
+    <<: *landing-service
+    container_name: landing-forgotten-american-weapons
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: forgotten-american-weapons
+    env_file:
+      - ./.env.stripe
+      - ./forgotten-american-weapons/.env
+    ports:
+      - "127.0.0.1:3007:3000"
+
+  british-nostalgia:
+    <<: *landing-service
+    container_name: landing-british-nostalgia
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: british-nostalgia
+    env_file:
+      - ./.env.stripe
+      - ./british-nostalgia/.env
+    ports:
+      - "127.0.0.1:3008:3000"
+
+networks:
+  landing:
+    driver: bridge

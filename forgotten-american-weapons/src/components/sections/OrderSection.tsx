@@ -2,6 +2,7 @@ import { PricingTable } from "@/components/commerce/PricingTable";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import type { Product } from "@/lib/products";
+import { PageContainer } from "@/components/ui/PageContainer";
 import {
   formatCommerceCopy,
   type HomePageContent,
@@ -20,7 +21,7 @@ export function OrderSection({
 }: OrderSectionProps) {
   return (
     <section id="order" className="py-16 md:py-24 bg-parchment-texture">
-      <div className="w-full px-4 md:px-6">
+      <PageContainer>
         <p className="section-label text-center">{content.eyebrow}</p>
         <StarDivider className="max-w-xs mx-auto" />
         <VintageHeadline
@@ -48,7 +49,7 @@ export function OrderSection({
           </span>
           <span>{content.trustLine}</span>
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

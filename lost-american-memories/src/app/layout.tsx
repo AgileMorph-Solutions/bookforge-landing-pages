@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto_Slab, Source_Sans_3 } from "next/font/google";
+import { Libre_Caslon_Text, Work_Sans } from "next/font/google";
 import { CountdownBanner } from "@/components/ui/CountdownBanner";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -11,17 +11,18 @@ import "./globals.css";
 
 export const dynamic = "force-dynamic";
 
-const robotoSlab = Roboto_Slab({
+const libreCaslon = Libre_Caslon_Text({
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  variable: "--font-roboto-slab",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-libre-caslon",
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
+const workSans = Work_Sans({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-source-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-work-sans",
   display: "swap",
 });
 
@@ -100,7 +101,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${robotoSlab.variable} ${sourceSans.variable}`}
+      className={`${libreCaslon.variable} ${workSans.variable}`}
     >
       <head>
         <script
@@ -108,7 +109,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased pb-20 md:pb-0">
+      <body className="paper-texture antialiased pb-20 md:pb-0">
         <CountdownBanner {...homePage.countdownBanner} />
         <Header
           siteSettings={siteSettings}

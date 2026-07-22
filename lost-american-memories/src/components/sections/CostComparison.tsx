@@ -1,3 +1,4 @@
+import { PageContainer } from "@/components/ui/PageContainer";
 import { StarDivider } from "@/components/ui/StarDivider";
 import { VintageHeadline } from "@/components/ui/VintageHeadline";
 import { formatPrice, type Product } from "@/lib/products";
@@ -13,26 +14,23 @@ interface CostComparisonProps {
 
 export function CostComparison({ content, bundle }: CostComparisonProps) {
   return (
-    <section id="math" className="py-16 md:py-24 bg-cream">
-      <div className="w-full px-4 md:px-6">
+    <section id="math" className="bg-cream py-20 md:py-28">
+      <PageContainer>
         <p className="section-label text-center">{content.eyebrow}</p>
-        <StarDivider className="max-w-xs mx-auto" />
-        <VintageHeadline
-          as="h2"
-          className="mt-4 text-center text-3xl md:text-4xl"
-        >
+        <StarDivider className="mx-auto max-w-xs" />
+        <VintageHeadline as="h2" className="section-title mt-4 text-center">
           {content.headline}
         </VintageHeadline>
-        <p className="mt-4 text-center text-navy/70 max-w-2xl mx-auto">
+        <p className="landing-prose mx-auto mt-4 max-w-2xl text-center">
           {content.body}
         </p>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <div className="card-parchment p-6 border-2 border-parchment-dark">
-            <h3 className="font-display text-xl font-bold text-navy mb-1 uppercase">
+          <div className="card-parchment border border-[#e3beb8] p-6">
+            <h3 className="mb-1 font-display text-xl font-bold uppercase text-ink">
               {content.modernTitle}
             </h3>
-            <p className="text-xs uppercase tracking-widest text-navy/50 mb-4">
+            <p className="mb-4 text-xs uppercase tracking-widest text-[#5a403c]/70">
               {content.modernSubtitle}
             </p>
             <ul className="space-y-3">
@@ -41,8 +39,8 @@ export function CostComparison({ content, bundle }: CostComparisonProps) {
                   key={item.label}
                   className="flex justify-between gap-4 border-b border-dashed border-parchment-dark pb-2 last:border-0"
                 >
-                  <span className="text-navy/80 text-sm">{item.label}</span>
-                  <span className="text-red font-display font-bold text-sm shrink-0">
+                  <span className="text-sm text-[#5a403c]">{item.label}</span>
+                  <span className="shrink-0 font-display text-sm font-bold text-red">
                     {item.cost}
                   </span>
                 </li>
@@ -50,11 +48,11 @@ export function CostComparison({ content, bundle }: CostComparisonProps) {
             </ul>
           </div>
 
-          <div className="card-parchment p-6 border-2 border-red/30 ring-1 ring-gold/30">
-            <h3 className="font-display text-xl font-bold text-navy mb-1 uppercase">
+          <div className="card-parchment border border-gold/40 p-6 ring-1 ring-gold/20">
+            <h3 className="mb-1 font-display text-xl font-bold uppercase text-ink">
               {content.vintageTitle}
             </h3>
-            <p className="text-xs uppercase tracking-widest text-navy/50 mb-4">
+            <p className="mb-4 text-xs uppercase tracking-widest text-[#5a403c]/70">
               {content.vintageSubtitle}
             </p>
             <ul className="space-y-3">
@@ -63,8 +61,8 @@ export function CostComparison({ content, bundle }: CostComparisonProps) {
                   key={item.label}
                   className="flex justify-between gap-4 border-b border-dashed border-parchment-dark pb-2 last:border-0"
                 >
-                  <span className="text-navy/80 text-sm">{item.label}</span>
-                  <span className="text-navy font-display font-bold text-sm shrink-0">
+                  <span className="text-sm text-[#5a403c]">{item.label}</span>
+                  <span className="shrink-0 font-display text-sm font-bold text-ink">
                     {item.cost}
                   </span>
                 </li>
@@ -73,12 +71,12 @@ export function CostComparison({ content, bundle }: CostComparisonProps) {
           </div>
         </div>
 
-        <p className="mt-8 text-center text-navy/70 font-display">
+        <p className="mt-8 text-center font-display text-ink/70">
           {formatContentTemplate(content.footer, {
             price: formatPrice(bundle.price),
           })}
         </p>
-      </div>
+      </PageContainer>
     </section>
   );
 }

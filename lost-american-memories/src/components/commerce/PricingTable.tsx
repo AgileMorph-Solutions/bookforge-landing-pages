@@ -11,8 +11,8 @@ export function PricingTable({ individualBooks, bundle }: PricingTableProps) {
   const totalValue = valueStack.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <div className="card-parchment p-6 md:p-8 border-2 border-navy/20 border-vintage">
-      <h3 className="font-display text-xl md:text-2xl font-bold text-navy mb-6 uppercase">
+    <div className="card-parchment border border-gold p-6 md:p-8">
+      <h3 className="mb-6 font-display text-xl font-bold text-ink md:text-2xl">
         Included at {formatPrice(bundle.price)}:
       </h3>
       <ul className="space-y-3">

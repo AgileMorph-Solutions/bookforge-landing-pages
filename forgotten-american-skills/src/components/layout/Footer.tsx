@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandSeal } from "@/components/ui/BrandSeal";
+import { PageContainer } from "@/components/ui/PageContainer";
 import type {
   HomePageContent,
   NavLinkContent,
@@ -35,10 +36,10 @@ export function Footer({ siteSettings, footer, navLinks }: FooterProps) {
 
       {/* Wood strip + disclaimer */}
       <div className="bg-wood-surface py-10">
-        <div className="w-full px-4 md:px-6">
+        <PageContainer>
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
             <div className="flex items-center gap-3">
-              <BrandSeal size={48} />
+              <BrandSeal size={48} logoUrl={siteSettings.logo} />
               <div>
                 <p className="font-display text-lg font-bold text-cream">
                   {siteSettings.name}
@@ -74,7 +75,7 @@ export function Footer({ siteSettings, footer, navLinks }: FooterProps) {
           <p className="mt-4 text-xs text-cream/40">
             &copy; 2026 {siteSettings.name} &middot; {footer.copyrightLine}
           </p>
-        </div>
+        </PageContainer>
       </div>
     </footer>
   );

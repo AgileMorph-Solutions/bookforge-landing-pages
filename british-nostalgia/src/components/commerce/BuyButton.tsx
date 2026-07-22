@@ -7,7 +7,7 @@ interface BuyButtonProps {
   productSlug: ProductSlug;
   label?: string;
   className?: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "header";
 }
 
 export function BuyButton({
@@ -35,7 +35,12 @@ export function BuyButton({
         return;
       }
 
-      if (res.status === 503) {
+      if (data.code === "PDF_NOT_READY" || res.status === 422) {
+        setError(
+          data.error ??
+            "This book's PDF is not available yet. Please check back soon."
+        );
+      } else if (res.status === 503) {
         setError("Payments are not set up yet. Please try again later.");
       } else {
         setError(data.error ?? "Something went wrong. Please try again.");
@@ -48,21 +53,31 @@ export function BuyButton({
   };
 
   const baseClass =
-    variant === "primary" ? "btn-vintage" : "btn-vintage-secondary";
+    variant === "primary"
+      ? "btn-vintage"
+      : variant === "secondary"
+        ? "btn-vintage-secondary"
+        : "btn-header";
+
+  const widthClass = className.includes("w-full") ? "w-full" : "w-fit";
 
   return (
-    <div className="flex flex-col items-stretch gap-2">
+    <div className={`flex flex-col gap-2 ${widthClass}`}>
       <button
         type="button"
         onClick={handleClick}
         disabled={loading}
         className={`${baseClass} ${className}`}
       >
-        {loading ? "Loading..." : label}
-        {!loading && variant === "primary" && <span aria-hidden>→</span>}
+        <span>{loading ? "Loading..." : label}</span>
+        {!loading && variant !== "secondary" && (
+          <span aria-hidden className="text-base leading-none">
+            →
+          </span>
+        )}
       </button>
       {error && (
-        <p className="text-sm text-red text-center" role="alert">
+        <p className="text-center text-sm text-red" role="alert">
           {error}
         </p>
       )}

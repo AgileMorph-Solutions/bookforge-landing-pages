@@ -3,16 +3,17 @@ import Image from "next/image";
 interface BrandSealProps {
   size?: number;
   className?: string;
+  logoUrl?: string;
 }
 
-export function BrandSeal({ size = 40, className = "" }: BrandSealProps) {
+export function BrandSeal({ size = 40, className = "", logoUrl }: BrandSealProps) {
   return (
     <div
       className={`relative shrink-0 overflow-hidden rounded-full ${className}`}
       style={{ width: size, height: size }}
     >
       <Image
-        src="/images/logo.png"
+        src={logoUrl ?? "/images/logo.png"}
         alt="Lost American Memories"
         width={size * 2}
         height={size * 2}

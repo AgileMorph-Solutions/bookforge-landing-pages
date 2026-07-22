@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BrandSeal } from "@/components/ui/BrandSeal";
+import { PageContainer } from "@/components/ui/PageContainer";
 import type {
   HomePageContent,
   NavLinkContent,
@@ -14,68 +14,78 @@ interface FooterProps {
 
 export function Footer({ siteSettings, footer, navLinks }: FooterProps) {
   return (
-    <footer>
-      {/* Navy branding bar — matches cover bottom banner */}
-      <div className="bg-navy border-vintage-top py-6 text-center">
-        <div className="flex items-center justify-center gap-3">
-          <span className="text-red text-sm" aria-hidden>
-            ★
-          </span>
-          <p className="font-display text-lg md:text-xl font-bold text-cream uppercase tracking-widest">
+    <footer className="border-t border-[#e3beb8] bg-parchment">
+      <PageContainer className="flex flex-col items-start justify-between gap-12 py-20 md:flex-row md:items-center">
+        <div>
+          <p className="font-display text-2xl font-bold text-red md:text-[2rem]">
             {siteSettings.name}
           </p>
-          <span className="text-red text-sm" aria-hidden>
-            ★
-          </span>
+          <p className="mt-2 max-w-xs font-body text-base text-[#5a403c]">
+            {footer.tagline}
+          </p>
         </div>
-        <p className="mt-2 text-xs text-cream/70 uppercase tracking-[0.15em]">
-          {footer.tagline}
-        </p>
-      </div>
-
-      {/* Wood strip + disclaimer */}
-      <div className="bg-wood-surface py-10">
-        <div className="w-full px-4 md:px-6">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-            <div className="flex items-center gap-3">
-              <BrandSeal size={48} />
-              <div>
-                <p className="font-display text-lg font-bold text-cream">
-                  {siteSettings.name}
-                </p>
-                <p className="text-sm text-cream/60">
-                  {siteSettings.tagline} &middot; Edition MMXXVI &middot; No. I
-                </p>
-              </div>
-            </div>
-            <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-cream/80">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="hover:text-cream transition-colors uppercase tracking-wider text-xs"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <Link
-                href={siteSettings.youtubeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-cream transition-colors uppercase tracking-wider text-xs"
+        <div className="grid grid-cols-2 gap-12 text-left sm:grid-cols-3">
+          <div className="flex flex-col gap-3">
+            <h4 className="mb-2 font-body text-sm font-bold uppercase tracking-widest text-ink">
+              Library
+            </h4>
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[#5a403c] underline decoration-red/30 transition-colors hover:text-red"
               >
-                YouTube
-              </Link>
-            </nav>
+                {link.label}
+              </a>
+            ))}
           </div>
-          <p className="mt-8 text-xs text-cream/50 leading-relaxed max-w-3xl">
-            {footer.disclaimer}
-          </p>
-          <p className="mt-4 text-xs text-cream/40">
-            &copy; 2026 {siteSettings.name} &middot; {footer.copyrightLine}
-          </p>
+          <div className="flex flex-col gap-3">
+            <h4 className="mb-2 font-body text-sm font-bold uppercase tracking-widest text-ink">
+              About
+            </h4>
+            <Link
+              href={siteSettings.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#5a403c] underline decoration-red/30 transition-colors hover:text-red"
+            >
+              YouTube
+            </Link>
+            <a
+              href="#faq"
+              className="text-[#5a403c] underline decoration-red/30 transition-colors hover:text-red"
+            >
+              FAQ
+            </a>
+          </div>
+          <div className="flex flex-col gap-3">
+            <h4 className="mb-2 font-body text-sm font-bold uppercase tracking-widest text-ink">
+              Support
+            </h4>
+            <a
+              href="#order"
+              className="text-[#5a403c] underline decoration-red/30 transition-colors hover:text-red"
+            >
+              Order
+            </a>
+            <a
+              href="#faq"
+              className="text-[#5a403c] underline decoration-red/30 transition-colors hover:text-red"
+            >
+              Guarantee
+            </a>
+          </div>
         </div>
-      </div>
+      </PageContainer>
+      <PageContainer className="border-t border-[#e3beb8]/30 pb-8 pt-8">
+        <p className="font-body text-xs uppercase tracking-widest text-[#5a403c]">
+          Handcrafted in 2026 &copy; {siteSettings.name} &middot;{" "}
+          {footer.copyrightLine}
+        </p>
+        <p className="mt-3 max-w-3xl text-xs leading-relaxed text-[#5a403c]/70">
+          {footer.disclaimer}
+        </p>
+      </PageContainer>
     </footer>
   );
 }
