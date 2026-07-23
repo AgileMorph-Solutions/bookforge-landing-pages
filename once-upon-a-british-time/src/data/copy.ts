@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Once Upon A British Time",
   tagline: "A British Domestic Kitchen Library",
   youtubeUrl: "https://www.youtube.com/channel/UCpIqZ2CpJpvB54D7WU7eKUA",
-  youtubeSubscribers: "Growing",
+  youtubeSubscribers: "34.8K",
   averageRating: "4.9",
   readerCount: "4,820+",
   guaranteeDays: 30,

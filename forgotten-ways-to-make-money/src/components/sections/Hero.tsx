@@ -29,7 +29,7 @@ export function Hero({ content, bundle }: HeroProps) {
             <p className="landing-prose mb-8 max-w-lg text-lg">
               {content.subheadline}
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
               <BuyButton
                 productSlug="bundle"
                 label={`${content.primaryCta.label} · ${formatPrice(bundle.price)}`}

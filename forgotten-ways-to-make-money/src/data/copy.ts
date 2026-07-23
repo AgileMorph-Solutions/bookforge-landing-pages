@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Forgotten Ways to Make Money",
   tagline: "An Ingenuity & Income Library",
   youtubeUrl: "https://www.youtube.com/channel/UC9Yv9fwZGNi77S2NDqRDgEQ",
-  youtubeSubscribers: "Growing",
+  youtubeSubscribers: "15K",
   averageRating: "4.9",
   readerCount: "4,820+",
   guaranteeDays: 30,

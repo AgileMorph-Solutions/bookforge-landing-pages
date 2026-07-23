@@ -19,8 +19,13 @@ const MAPPINGS: BookMapping[] = [
   {
     site: "once-upon-a-british-time",
     booksFolder: "Once Upon A British Time",
-    // PDFs not yet in books/; covers synced separately. Add mappings when PDFs land.
-    files: [],
+    files: [
+      {
+        source:
+          "the-british-freezer-bible-150-foods-meals-money-saving-trick.pdf (1).pdf",
+        dest: "british-grocery-lasting-bible.pdf",
+      },
+    ],
   },
   {
     site: "forgotten-ways-to-make-money",
