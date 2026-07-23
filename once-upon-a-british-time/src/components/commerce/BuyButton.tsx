@@ -66,7 +66,7 @@ export function BuyButton({
       className={
         isFullWidth
           ? "flex w-full flex-col gap-2"
-          : "inline-flex flex-col items-stretch gap-2"
+          : "inline-flex flex-col items-stretch gap-2 sm:h-auto"
       }
     >
       <button
@@ -77,13 +77,13 @@ export function BuyButton({
       >
         <span>{loading ? "Loading..." : label}</span>
         {!loading && variant !== "secondary" && (
-          <span aria-hidden className="text-base leading-none">
+          <span aria-hidden className="text-sm leading-none">
             →
           </span>
         )}
       </button>
       {error && (
-        <p className="text-center text-sm text-red" role="alert">
+        <p className="max-w-xs text-center text-sm text-red sm:text-left" role="alert">
           {error}
         </p>
       )}
