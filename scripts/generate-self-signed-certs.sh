@@ -22,6 +22,10 @@ DOMAINS=(
   www.forgottenamericanweapons.com
   britishnostalgiastore.com
   www.britishnostalgiastore.com
+  onceuponabritishtime.com
+  www.onceuponabritishtime.com
+  forgottenwaystomakemoney.com
+  www.forgottenwaystomakemoney.com
 )
 
 mkdir -p "$SSL_DIR"

@@ -59,10 +59,16 @@ export function BuyButton({
         ? "btn-vintage-secondary"
         : "btn-header";
 
-  const widthClass = className.includes("w-full") ? "w-full" : "w-fit";
+  const isFullWidth = className.includes("w-full");
 
   return (
-    <div className={`flex flex-col gap-2 ${widthClass}`}>
+    <div
+      className={
+        isFullWidth
+          ? "flex w-full flex-col gap-2"
+          : "inline-flex flex-col items-stretch gap-2"
+      }
+    >
       <button
         type="button"
         onClick={handleClick}

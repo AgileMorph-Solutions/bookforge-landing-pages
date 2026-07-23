@@ -85,6 +85,22 @@ const SITES: SiteCors[] = [
       "https://www.forgottenamericanskills.com",
     ],
   },
+  {
+    slug: "once-upon-a-british-time",
+    projectId: "mh7aketu",
+    origins: [
+      "https://onceuponabritishtime.com",
+      "https://www.onceuponabritishtime.com",
+    ],
+  },
+  {
+    slug: "forgotten-ways-to-make-money",
+    projectId: "2zvm6n87",
+    origins: [
+      "https://forgottenwaystomakemoney.com",
+      "https://www.forgottenwaystomakemoney.com",
+    ],
+  },
 ];
 
 const ALL_FOREIGN_ORIGINS = new Map<string, string>();
@@ -165,7 +181,7 @@ function assertNoCrossContamination(site: SiteCors, listed: string[]) {
 
 function main() {
   console.log(
-    "Adding Sanity CORS origins (apex + www) for 8 channel sites...\n"
+    "Adding Sanity CORS origins (apex + www) for channel sites...\n"
   );
 
   for (const site of SITES) {

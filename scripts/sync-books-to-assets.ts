@@ -17,6 +17,16 @@ type BookMapping = {
 
 const MAPPINGS: BookMapping[] = [
   {
+    site: "once-upon-a-british-time",
+    booksFolder: "Once Upon A British Time",
+    files: [],
+  },
+  {
+    site: "forgotten-ways-to-make-money",
+    booksFolder: "Forgotten Ways to Make Money",
+    files: [],
+  },
+  {
     site: "lost-american-memories",
     booksFolder: "Lost American Memories",
     files: [

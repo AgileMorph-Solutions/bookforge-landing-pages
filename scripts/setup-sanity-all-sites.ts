@@ -45,6 +45,16 @@ const SITES: SiteSanityConfig[] = [
     projectId: "lp0hbjba",
     projectName: "forgotten-american-skills",
   },
+  {
+    slug: "once-upon-a-british-time",
+    projectId: "mh7aketu",
+    projectName: "once-upon-a-british-time",
+  },
+  {
+    slug: "forgotten-ways-to-make-money",
+    projectId: "2zvm6n87",
+    projectName: "forgotten-ways-to-make-money",
+  },
 ];
 
 function parseEnvFile(filePath: string): Record<string, string> {

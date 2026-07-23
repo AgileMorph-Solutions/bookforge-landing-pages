@@ -13,6 +13,8 @@ APEX_DOMAINS=(
   forgottenamericanskills.com
   forgottenamericanweapons.com
   britishnostalgiastore.com
+  onceuponabritishtime.com
+  forgottenwaystomakemoney.com
 )
 
 for domain in "${APEX_DOMAINS[@]}"; do

@@ -48,11 +48,13 @@ export function LastCall({
               {formatPrice(bundle.compareAt)}
             </span>
           </div>
-          <BuyButton
-            productSlug="bundle"
-            label={content.ctaLabel}
-            className="px-12 py-5 text-base shadow-2xl hover:scale-105"
-          />
+          <div className="flex w-full justify-center">
+            <BuyButton
+              productSlug="bundle"
+              label={content.ctaLabel}
+              className="px-12 py-5 text-base shadow-2xl hover:scale-105"
+            />
+          </div>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-8 text-xs uppercase tracking-widest text-cream/55">
             <span>Instant PDF Access</span>
             <span>Lifetime Updates</span>

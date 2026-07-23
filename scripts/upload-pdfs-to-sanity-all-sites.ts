@@ -24,6 +24,8 @@ const SITES = [
   "british-nostalgia",
   "carlyfe",
   "forgotten-american-weapons",
+  "once-upon-a-british-time",
+  "forgotten-ways-to-make-money",
 ] as const;
 
 function parseEnvFile(filePath: string): Record<string, string> {

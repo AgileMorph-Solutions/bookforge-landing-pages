@@ -21,7 +21,14 @@ type BookDef = {
   highlights: string[];
 };
 
-type ChannelTheme = "cookbook" | "survival" | "home-savings" | "automotive" | "weapons" | "skills";
+type ChannelTheme =
+  | "cookbook"
+  | "survival"
+  | "home-savings"
+  | "automotive"
+  | "weapons"
+  | "skills"
+  | "money";
 
 type SiteContentSections = {
   heroBadge: string;
@@ -245,6 +252,33 @@ function generateSiteContentSections(config: ChannelConfig): SiteContentSections
       successDownloadLabel: "Download your manuals below.",
       productPdfDescription:
         "Paid skills manual PDF. The website serves this only through the protected download API.",
+    },
+    money: {
+      heroBadge: "All 5 Income Guides",
+      costEyebrow: "II. Income Costs",
+      costHeadline: "What earning more costs now versus then.",
+      costBody:
+        "Earlier generations built income with thrift, trade skill, and quiet ingenuity — not subscription courses. Markets moved. The math of making money the hard way did not.",
+      modernTitle: "How 2026 sells 'making money'",
+      modernSubtitle: "Typical courses, apps, and side-hustle kits",
+      vintageTitle: "How these guides teach earning",
+      vintageSubtitle: "Same wallets, forgotten methods",
+      costFooter:
+        "The complete library is {price} once. Often less than a single online money course.",
+      whatsInsideBody:
+        "Five hundred lessons across five guides. Each volume carries checklists, ledgers, step-by-step income plays, and the quiet thrift tip that rarely made a modern guru's funnel.",
+      previewHeadline: "A preview of what's in your income library.",
+      testimonialsEyebrow: "IV. From Real Earners",
+      testimonialsHeadline: "What readers put to work.",
+      testimonialsBody: `${readerCount} readers. Three wallets. Three different reasons they stopped chasing trends.`,
+      faqHeadline: "Questions before you buy.",
+      copyrightLine:
+        "All rights reserved · For the builders who still believe wealth starts with ingenuity.",
+      guaranteeHeadline: "The 30-Day Promise",
+      contentUnitLabel: "lessons",
+      successDownloadLabel: "Download your guides below.",
+      productPdfDescription:
+        "Paid income guide PDF. The website serves this only through the protected download API.",
     },
   };
 
@@ -2036,6 +2070,286 @@ const CHANNELS: ChannelConfig[] = [
       "Old-timer handbook, vanishing trades, hand-tool repair, food preservation, and frontier camping — every guide built for self-reliance with simple tools.",
     faqProductType: "manual",
   },
+  {
+    slug: "once-upon-a-british-time",
+    theme: "cookbook",
+    booksFolder: "Once Upon A British Time",
+    name: "Once Upon A British Time",
+    tagline: "A British Domestic Kitchen Library",
+    youtubeUrl: "https://www.youtube.com/channel/UCpIqZ2CpJpvB54D7WU7eKUA",
+    youtubeSubscribers: "Growing",
+    currency: "gbp",
+    bundlePrice: 44.99,
+    bundleCompareAt: 134.95,
+    bundleTitle: "The Once Upon A British Time Kitchen Library",
+    bundleSubtitle:
+      "All 5 British domestic guides in one bundle — grocery lasting, allotment cooking, cupboard meals, waste-free Nan habits, and batch preserving",
+    books: [
+      {
+        slug: "british-grocery-lasting-bible",
+        title: "The British Grocery-Lasting Bible",
+        shortTitle: "Grocery-Lasting Bible",
+        subtitle: "100 Nan Tricks to Make Fresh Food Last Weeks Longer",
+        price: 9.99,
+        compareAt: 17.99,
+        era: "Kitchen Wisdom",
+        themes: ["Food Waste", "Storage", "Nan Tricks"],
+        highlights: [
+          "Stretch every shop without fancy containers",
+          "Dairy, produce, and bread lasting tricks",
+          "Postwar habits that still beat fridge gadgets",
+          "100 storage methods priced for UK shops",
+          "Cut the £730 average food-waste bill",
+        ],
+      },
+      {
+        slug: "allotment-kitchen-handbook",
+        title: "The Allotment Kitchen Handbook",
+        shortTitle: "Allotment Kitchen Handbook",
+        subtitle: "75 Seasonal British Recipes from Plot to Plate",
+        price: 9.99,
+        compareAt: 17.99,
+        era: "Allotment",
+        themes: ["Seasonal", "Garden", "British"],
+        highlights: [
+          "Seasonal plates from allotment staples",
+          "Stretch a glut without waste",
+          "Simple recipes for one or two",
+          "Plot-to-plate planning calendars",
+          "British garden classics recovered",
+        ],
+      },
+      {
+        slug: "cupboard-cookery-manual",
+        title: "The Cupboard Cookery Manual",
+        shortTitle: "Cupboard Cookery Manual",
+        subtitle: "100 Meals from Tins, Packets & Pantry Staples",
+        price: 9.99,
+        compareAt: 17.99,
+        era: "Cupboard",
+        themes: ["Tinned Food", "Pantry", "Budget"],
+        highlights: [
+          "Meals from beans, soup, and packets",
+          "No fancy ingredients required",
+          "Tea-time and supper classics",
+          "Stretch a weekly shop further",
+          "100 cupboard recipes for real kitchens",
+        ],
+      },
+      {
+        slug: "nan-waste-free-kitchen",
+        title: "Nan's Waste-Free Kitchen",
+        shortTitle: "Nan's Waste-Free Kitchen",
+        subtitle: "100 Old British Habits, Shopping Tricks & Leftover Recipes",
+        price: 9.99,
+        compareAt: 17.99,
+        era: "Nan",
+        themes: ["Habits", "Shopping", "Leftovers"],
+        highlights: [
+          "100 habits passed down generations",
+          "Shopping tricks that still work at the till",
+          "Leftover plates Nan never wasted",
+          "Stretch every penny of the weekly shop",
+          "Quiet resourcefulness of British homes",
+        ],
+      },
+      {
+        slug: "british-batch-and-preserve-plan",
+        title: "The British Batch & Preserve Plan",
+        shortTitle: "Batch & Preserve Plan",
+        subtitle: "Cook Once, Freeze Smart & Put Food By the Old Way",
+        price: 9.99,
+        compareAt: 17.99,
+        era: "Preserve",
+        themes: ["Batch Cooking", "Preserving", "Freezer"],
+        highlights: [
+          "Cook once, eat well all week",
+          "Freezer-friendly British meals",
+          "Jam, pickle, and cold-store basics",
+          "Portion plans for one or a family",
+          "Shopping lists that waste nothing",
+        ],
+      },
+    ],
+    hero: {
+      headline: "British kitchen wisdom. Written down before it's forgotten.",
+      subheadline:
+        "Five guides from the heart of British domestic life — grocery lasting, allotment cooking, cupboard meals, waste-free Nan habits, and batch preserving. Every tip built for real kitchens on real budgets.",
+    },
+    youtubeBody:
+      "Once Upon A British Time is a storytelling journey through British domestic life — flavors, memories, and the clever resourcefulness of generations past. This library puts those kitchen lessons in order: practical, printable, and ready for your cooker.",
+    seoTitle: "Once Upon A British Time Kitchen Library · 5 British Domestic Guides",
+    seoDescription:
+      "Five British domestic kitchen guides: grocery lasting, allotment cooking, cupboard meals, Nan's waste-free habits, and batch preserving. Instant PDF download.",
+    footerTagline: "Flavors · Memories · Resourcefulness · Once Upon A British Time",
+    footerDisclaimer:
+      "Recipes and budgeting tips for general household use. Prices based on UK shops circa 2026. Adjust for your local market.",
+    costModern: [
+      { label: "Ready meal (single serving)", cost: "£4–£6" },
+      { label: "Takeaway fish and chips", cost: "£8–£12" },
+      { label: "Weekly food waste (average UK home)", cost: "£14+" },
+      { label: "Food-storage gadget haul", cost: "£40–£80" },
+      { label: "Eating out twice a week", cost: "£80+" },
+    ],
+    costVintage: [
+      { label: "Nan grocery-lasting setup", cost: "~£1" },
+      { label: "Cupboard supper for one", cost: "~£1.20" },
+      { label: "Allotment plate from plot", cost: "~£0.90" },
+      { label: "Batch-cooked week of meals", cost: "~£15" },
+      { label: "Two cooking from the library", cost: "£25–£35" },
+    ],
+    orderHeadline: "Pay £44.99 once. Cook smarter forever.",
+    orderSubheadline:
+      "Your download link lands in email within about a minute. Read on phone, tablet, or laptop — or print the recipes by the cooker.",
+    orderIndividualNote: "",
+    lastCallHeadline: "Stop wasting groceries Nan would have stretched for weeks.",
+    lastCallBody:
+      "£44.99 covers all five guides. Cook a few this month; if they never earn their keep, one email gets a full refund.",
+    libraryHeadline: "Five guides. Five hundred lessons from British kitchens.",
+    libraryBody:
+      "Grocery lasting, allotment cooking, cupboard meals, Nan's habits, and batch preserving — every guide priced for today's British shops.",
+    faqProductType: "cookbook",
+  },
+  {
+    slug: "forgotten-ways-to-make-money",
+    theme: "money",
+    booksFolder: "Forgotten Ways to Make Money",
+    name: "Forgotten Ways to Make Money",
+    tagline: "An Ingenuity & Income Library",
+    youtubeUrl: "https://www.youtube.com/channel/UC9Yv9fwZGNi77S2NDqRDgEQ",
+    youtubeSubscribers: "Growing",
+    currency: "usd",
+    bundlePrice: 59,
+    bundleCompareAt: 175,
+    bundleTitle: "The Forgotten Ways to Make Money Library",
+    bundleSubtitle:
+      "All 5 income and ingenuity guides in one bundle — side hustles, thrift habits, trade income, ledgers, and prosperity playbooks",
+    books: [
+      {
+        slug: "forgotten-side-hustle-playbook",
+        title: "The Forgotten Side-Hustle Playbook",
+        shortTitle: "Side-Hustle Playbook",
+        subtitle: "100 Old Income Streams That Still Work Without an App",
+        price: 19,
+        compareAt: 39,
+        era: "Side Income",
+        themes: ["Side Hustles", "Cash", "Ingenuity"],
+        highlights: [
+          "Income streams that predate the gig apps",
+          "Start with skills and tools you already own",
+          "Weekend and evening earning plans",
+          "100 practical plays, not theory",
+          "Built for households that need cash now",
+        ],
+      },
+      {
+        slug: "thrift-to-wealth-habits",
+        title: "Thrift-to-Wealth Habits",
+        shortTitle: "Thrift-to-Wealth Habits",
+        subtitle: "150 Money Habits from Frugal Generations That Still Compound",
+        price: 27,
+        compareAt: 49,
+        era: "Thrift",
+        themes: ["Habits", "Saving", "Compounding"],
+        highlights: [
+          "Daily thrift habits that free cash to invest",
+          "Shopping, housing, and utility stretches",
+          "Ledgers your grandparents actually kept",
+          "150 habits ranked by impact",
+          "Turn saved dollars into working money",
+        ],
+      },
+      {
+        slug: "old-trade-income-manual",
+        title: "The Old Trade Income Manual",
+        shortTitle: "Old Trade Income Manual",
+        subtitle: "Skills, Services & Cash Work from Trades That Never Went Out of Style",
+        price: 27,
+        compareAt: 49,
+        era: "Trades",
+        themes: ["Trades", "Services", "Cash Work"],
+        highlights: [
+          "Trade skills that neighbors still pay for",
+          "Price and package simple service offers",
+          "Tool lists that stay under a starter budget",
+          "Local demand maps and first-client scripts",
+          "Cash work without a corporate resume",
+        ],
+      },
+      {
+        slug: "ledger-and-cashflow-guide",
+        title: "The Ledger & Cashflow Guide",
+        shortTitle: "Ledger & Cashflow Guide",
+        subtitle: "Simple Books, Pricing & Cash Tracking for Small Earners",
+        price: 27,
+        compareAt: 49,
+        era: "Ledger",
+        themes: ["Bookkeeping", "Pricing", "Cashflow"],
+        highlights: [
+          "Paper and spreadsheet ledgers that stick",
+          "Price work so you actually profit",
+          "Weekly cashflow checklists",
+          "Avoid the leaks that kill side income",
+          "Templates for solo earners",
+        ],
+      },
+      {
+        slug: "ingenuity-income-handbook",
+        title: "The Ingenuity Income Handbook",
+        shortTitle: "Ingenuity Income Handbook",
+        subtitle: "100 Resourceful Ways Past Generations Turned Scrap, Skill & Time into Pay",
+        price: 27,
+        compareAt: 49,
+        era: "Ingenuity",
+        themes: ["Resourcefulness", "Scrap", "Prosperity"],
+        highlights: [
+          "Turn scrap, skill, and spare hours into pay",
+          "Resale, repair, and make-to-order plays",
+          "Prosperity habits from harder decades",
+          "100 ingenuity methods with modern notes",
+          "Wealth • Ingenuity • Prosperity — in practice",
+        ],
+      },
+    ],
+    hero: {
+      headline: "Forgotten ways to earn. Written down before the algorithms bury them.",
+      subheadline:
+        "Five guides. Five hundred lessons in thrift, trade skill, and quiet ingenuity — side hustles, money habits, cash trades, ledgers, and resourceful income. Built from the same research behind Forgotten Ways to Make Money.",
+    },
+    youtubeBody:
+      "Forgotten Ways to Make Money recovers the income methods earlier generations used before subscription courses and app hustles. This library puts those plays in order — practical, printable, and ready for your next payday.",
+    seoTitle: "Forgotten Ways to Make Money Library · 5 Income & Ingenuity Guides",
+    seoDescription:
+      "Five income guides: forgotten side hustles, thrift-to-wealth habits, old trade income, ledgers, and ingenuity playbooks. Instant PDF download.",
+    footerTagline: "Wealth · Ingenuity · Prosperity · Forgotten Ways to Make Money",
+    footerDisclaimer:
+      "Income and business information for educational purposes. Results vary. Follow local laws, tax rules, and licensing requirements for any trade or service.",
+    costModern: [
+      { label: "Online 'make money' course", cost: "$97–$497" },
+      { label: "Side-hustle coaching month", cost: "$200–$500" },
+      { label: "App subscriptions (year)", cost: "$120–$300" },
+      { label: "Bad gig that burns a weekend", cost: "Priceless time" },
+      { label: "Bookkeeping software (year)", cost: "$150+" },
+    ],
+    costVintage: [
+      { label: "Paper ledger + thrift habit stack", cost: "~$5" },
+      { label: "First local trade offer", cost: "~$20 tools" },
+      { label: "Resale/scrap weekend play", cost: "~$0–$15" },
+      { label: "Cashflow checklist printouts", cost: "Included" },
+      { label: "Full 5-guide income library", cost: "$59" },
+    ],
+    orderHeadline: "Pay $59 once. Earn smarter forever.",
+    orderSubheadline:
+      "Your download link lands in email within about a minute. Print the checklists. Keep them where you plan the week.",
+    orderIndividualNote: "",
+    lastCallHeadline: "One forgotten income method can pay for this entire library.",
+    lastCallBody:
+      "$59 covers all five guides. Try them this month; if they never earn their keep, one email gets a full refund — and you still keep the set.",
+    libraryHeadline: "Five guides. Five hundred forgotten ways to make money.",
+    libraryBody:
+      "Side hustles, thrift habits, trade income, ledgers, and ingenuity — every guide built for real households that need cash, not course hype.",
+    faqProductType: "guide",
+  },
 ];
 
 // Assign pdf basenames
@@ -2045,7 +2359,12 @@ for (const channel of CHANNELS) {
   }
 }
 
+const ONLY = process.env.BOOTSTRAP_ONLY?.split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 for (const channel of CHANNELS) {
+  if (ONLY && ONLY.length > 0 && !ONLY.includes(channel.slug)) continue;
   bootstrapSite(channel);
 }
 

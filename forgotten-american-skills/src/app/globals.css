@@ -154,24 +154,23 @@ body {
   filter: blur(4px);
 }
 
-.landing-prose {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: color-mix(in srgb, #041525 78%, transparent);
-}
-
-/* ── Buttons (LAM-inspired: flat, high contrast, clear hierarchy) ── */
+/* ── Buttons ── */
 .btn-vintage {
-  @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-sm uppercase tracking-widest rounded-sm transition-all;
-  background: #8b6914;
-  color: #ffffff;
-  box-shadow: none;
-  border: none;
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-display font-bold text-sm uppercase tracking-wider rounded-sm transition-all;
+  background: linear-gradient(180deg, #a67c1a 0%, #8b6914 50%, #6b5010 100%);
+  color: #f2e8d8;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 12px rgba(139, 105, 20, 0.4);
+  border: 1px solid #6b5010;
   cursor: pointer;
 }
 
 .btn-vintage:hover {
-  background: #6b5010;
+  background: linear-gradient(180deg, #8b6914 0%, #6b5010 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 2px 8px rgba(139, 105, 20, 0.3);
 }
 
 .btn-vintage:active {
@@ -184,48 +183,16 @@ body {
 }
 
 .btn-vintage-secondary {
-  @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-sm uppercase tracking-widest rounded-sm transition-all;
-  background: transparent;
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-display font-bold text-sm uppercase tracking-wider rounded-sm transition-all;
+  background: #f2e8d8;
   color: #041525;
-  border: 1px solid #041525;
+  border: 2px solid #041525;
   cursor: pointer;
 }
 
 .btn-vintage-secondary:hover {
   background: #041525;
   color: #f2e8d8;
-}
-
-.btn-header {
-  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-xs uppercase tracking-widest rounded-sm transition-all md:px-6 md:text-sm;
-  background: #f2e8d8;
-  color: #041525;
-  border: 2px solid #c9a227;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.btn-header:hover {
-  background: #c9a227;
-  color: #041525;
-  border-color: #c9a227;
-}
-
-.btn-header:active {
-  transform: scale(0.98);
-}
-
-.btn-header:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.cover-frame {
-  background: #e8dcc4;
-  border: 2px solid #c9a227;
-  padding: 0.65rem;
-  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.18);
 }
 
 /* Legacy aliases */

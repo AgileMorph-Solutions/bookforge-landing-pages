@@ -16,3 +16,7 @@ Forgotten American Weapons
 https://forgottenamericanweapons.com
 British Nostalgia
 https://britishnostalgiastore.com
+Once Upon A British Time
+https://onceuponabritishtime.com
+Forgotten Ways to Make Money
+https://forgottenwaystomakemoney.com

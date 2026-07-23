@@ -33,8 +33,7 @@ body {
   background-position: center;
 }
 
-.bg-hero-kitchen,
-.bg-hero-texture {
+.bg-hero-kitchen {
   background-color: #ede5d1;
   background-image:
     url("/images/textures/parchment-noise.svg"),
@@ -65,26 +64,9 @@ body {
   font-family: var(--font-roboto-slab), Georgia, serif;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: #c4782a;
-}
-
-.section-title {
-  font-size: 1.875rem;
-  line-height: 1.1;
-}
-
-@media (min-width: 768px) {
-  .section-title {
-    font-size: 2.25rem;
-  }
-}
-
-.landing-prose {
-  font-size: 1rem;
-  line-height: 1.625;
-  color: rgba(42, 33, 24, 0.8);
 }
 
 .section-label::before,
@@ -172,18 +154,23 @@ body {
   filter: blur(4px);
 }
 
-/* ── Buttons (LAM-inspired: flat, high contrast, clear hierarchy) ── */
+/* ── Buttons ── */
 .btn-vintage {
-  @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-sm uppercase tracking-widest rounded-sm transition-all;
-  background: #c4782a;
-  color: #ffffff;
-  box-shadow: none;
-  border: none;
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-display font-bold text-sm uppercase tracking-wider rounded-sm transition-all;
+  background: linear-gradient(180deg, #d48a3a 0%, #c4782a 50%, #9a5c1e 100%);
+  color: #ede5d1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 12px rgba(196, 120, 42, 0.4);
+  border: 1px solid #9a5c1e;
   cursor: pointer;
 }
 
 .btn-vintage:hover {
-  background: #9a5c1e;
+  background: linear-gradient(180deg, #c4782a 0%, #9a5c1e 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 2px 8px rgba(196, 120, 42, 0.3);
 }
 
 .btn-vintage:active {
@@ -196,48 +183,16 @@ body {
 }
 
 .btn-vintage-secondary {
-  @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-sm uppercase tracking-widest rounded-sm transition-all;
-  background: transparent;
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-display font-bold text-sm uppercase tracking-wider rounded-sm transition-all;
+  background: #ede5d1;
   color: #2a2118;
-  border: 1px solid #2a2118;
+  border: 2px solid #2a2118;
   cursor: pointer;
 }
 
 .btn-vintage-secondary:hover {
   background: #2a2118;
   color: #ede5d1;
-}
-
-.btn-header {
-  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-xs uppercase tracking-widest rounded-sm transition-all md:px-6 md:text-sm;
-  background: #ede5d1;
-  color: #2a2118;
-  border: 2px solid #d4a84b;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.btn-header:hover {
-  background: #d4a84b;
-  color: #2a2118;
-  border-color: #d4a84b;
-}
-
-.btn-header:active {
-  transform: scale(0.98);
-}
-
-.btn-header:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.cover-frame {
-  background: #e4d9c0;
-  border: 2px solid #d4a84b;
-  padding: 0.65rem;
-  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.18);
 }
 
 /* Legacy aliases */

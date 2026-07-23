@@ -1,0 +1,61 @@
+import { formatPrice, getBundleValueStack, type Product } from "@/lib/products";
+import { BuyButton } from "./BuyButton";
+
+interface PricingTableProps {
+  individualBooks: Product[];
+  bundle: Product;
+}
+
+export function PricingTable({ individualBooks, bundle }: PricingTableProps) {
+  const valueStack = getBundleValueStack(individualBooks);
+  const totalValue = valueStack.reduce((sum, item) => sum + item.value, 0);
+
+  return (
+    <div className="card-parchment p-6 md:p-8 border-2 border-navy/20 border-vintage">
+      <h3 className="font-display text-xl md:text-2xl font-bold text-navy mb-6 uppercase">
+        Included at {formatPrice(bundle.price)}:
+      </h3>
+      <ul className="space-y-3">
+        {valueStack.map((item) => (
+          <li
+            key={item.label}
+            className="flex items-start justify-between gap-4 border-b border-dashed border-parchment-dark pb-3 last:border-0"
+          >
+            <span className="text-navy/80 text-sm md:text-base">
+              {item.label}
+            </span>
+            <span className="compare-stamp shrink-0">
+              {formatPrice(item.value)}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-6 pt-4 border-t-2 border-gold flex justify-between items-center">
+        <span className="font-display font-bold text-navy uppercase text-sm">
+          Total value
+        </span>
+        <span className="compare-stamp text-lg">
+          {formatPrice(totalValue)}
+        </span>
+      </div>
+      <div className="mt-3 flex justify-between items-center">
+        <span className="font-display font-bold text-navy text-lg uppercase">
+          You pay today
+        </span>
+        <span className="price-stamp text-4xl">
+          {formatPrice(bundle.price)}
+        </span>
+      </div>
+      <div className="mt-6">
+        <BuyButton
+          productSlug="bundle"
+          label={`Get the Complete Set · ${formatPrice(bundle.price)}`}
+          className="w-full text-base"
+        />
+      </div>
+      <p className="mt-4 text-center text-xs uppercase tracking-widest text-navy/50">
+        Download right away &middot; One payment &middot; Keep forever
+      </p>
+    </div>
+  );
+}
