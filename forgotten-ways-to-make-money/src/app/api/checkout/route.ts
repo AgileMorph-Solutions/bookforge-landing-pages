@@ -27,13 +27,15 @@ export async function POST(request: NextRequest) {
 
     const pdfCheck = await validatePdfsAvailableForPurchase(product.slug);
     if (!pdfCheck.ok) {
-      const missing =
-        pdfCheck.missingTitles.length > 0
-          ? ` Missing: ${pdfCheck.missingTitles.join(", ")}.`
-          : "";
+      if (pdfCheck.missingTitles.length > 0) {
+        console.warn(
+          `PDF_NOT_READY for ${product.slug}: ${pdfCheck.missingTitles.join(", ")}`
+        );
+      }
       return NextResponse.json(
         {
-          error: `This book's PDF is not available yet. Please check back soon.${missing}`,
+          error:
+            "This book's PDF is not available yet. Please check back soon.",
           code: "PDF_NOT_READY",
           missingTitles: pdfCheck.missingTitles,
         },

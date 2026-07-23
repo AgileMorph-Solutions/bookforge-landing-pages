@@ -275,18 +275,18 @@ const SITES: SiteTheme[] = [
       red: "#4f797b",
       redDark: "#3a5c5e",
       redLight: "#628e90",
-      cream: "#e3dac9",
-      parchment: "#d4c8b0",
+      cream: "#f4f0e6",
+      parchment: "#e8e2d4",
       parchmentDark: "#bdb092",
       gold: "#a67c52",
       goldLight: "#c09a6a",
       wood: "#5c4030",
       woodLight: "#6e4e3a",
       woodDark: "#3a281c",
-      heroAccentRgba: "rgba(79, 121, 123, 0.1)",
-      heroNavyRgba: "rgba(59, 43, 29, 0.1)",
-      heroWoodRgba: "rgba(92, 64, 48, 0.08)",
-      bodyParchmentRgba: "rgba(212, 200, 176, 0.9)",
+      heroAccentRgba: "rgba(79, 121, 123, 0.08)",
+      heroNavyRgba: "rgba(59, 43, 29, 0.08)",
+      heroWoodRgba: "rgba(92, 64, 48, 0.05)",
+      bodyParchmentRgba: "rgba(232, 226, 212, 0.9)",
       bodyParchmentDarkRgba: "rgba(189, 176, 146, 0.5)",
       fontImport: "Libre_Baskerville",
       fontImportName: "libreBaskerville",
@@ -384,6 +384,7 @@ body {
   background-position: center;
 }
 
+.bg-hero-texture,
 .bg-hero-kitchen {
   background-color: ${p.cream};
   background-image:
@@ -546,6 +547,31 @@ body {
   color: ${p.cream};
 }
 
+.btn-header {
+  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-xs uppercase tracking-widest rounded-sm transition-all md:px-6 md:text-sm;
+  background: ${p.cream};
+  color: ${p.navy};
+  border: 2px solid ${p.gold};
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-header:hover {
+  background: ${p.gold};
+  color: ${p.navy};
+  border-color: ${p.gold};
+}
+
+.btn-header:active {
+  transform: scale(0.98);
+}
+
+.btn-header:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Legacy aliases */
 .btn-primary {
   display: inline-flex;
@@ -679,7 +705,16 @@ function updateLayout(slug: string, p: Palette) {
   writeFileSync(file, content);
 }
 
+const ONLY = process.env.THEME_ONLY
+  ? new Set(
+      process.env.THEME_ONLY.split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    )
+  : null;
+
 for (const site of SITES) {
+  if (ONLY && !ONLY.has(site.slug)) continue;
   console.log(`Theming ${site.slug}...`);
   writeTailwind(site.slug, site.palette);
   writeGlobals(site.slug, site.palette);
@@ -687,4 +722,8 @@ for (const site of SITES) {
   console.log(`  ✓ ${site.slug}`);
 }
 
-console.log("\nAll channel themes applied.");
+console.log(
+  ONLY
+    ? `\nThemes applied (filtered: ${[...ONLY].join(", ")}).`
+    : "\nAll channel themes applied."
+);

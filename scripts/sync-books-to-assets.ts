@@ -19,12 +19,35 @@ const MAPPINGS: BookMapping[] = [
   {
     site: "once-upon-a-british-time",
     booksFolder: "Once Upon A British Time",
+    // PDFs not yet in books/; covers synced separately. Add mappings when PDFs land.
     files: [],
   },
   {
     site: "forgotten-ways-to-make-money",
     booksFolder: "Forgotten Ways to Make Money",
-    files: [],
+    files: [
+      {
+        source:
+          "100-forgotten-side-hustles-you-can-start-this-weekend-low-co.pdf.pdf",
+        dest: "forgotten-side-hustle-playbook.pdf",
+      },
+      {
+        source:
+          "the-junk-to-cash-reselling-guide-sourcing-cleaning-pricing-p.pdf.pdf",
+        dest: "ingenuity-income-handbook.pdf",
+      },
+      {
+        source:
+          "the-boring-businesses-blueprint-50-unsexy-services-with-repe.pdf (1).pdf",
+        dest: "old-trade-income-manual.pdf",
+      },
+      {
+        source:
+          "the-0-start-business-playbook-validate-price-and-sell-a-serv.pdf.pdf",
+        dest: "ledger-and-cashflow-guide.pdf",
+      },
+      // thrift-to-wealth-habits.pdf — no source in books/ yet
+    ],
   },
   {
     site: "lost-american-memories",

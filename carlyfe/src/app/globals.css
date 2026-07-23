@@ -33,6 +33,7 @@ body {
   background-position: center;
 }
 
+.bg-hero-texture,
 .bg-hero-kitchen {
   background-color: #e8eef5;
   background-image:
@@ -193,6 +194,31 @@ body {
 .btn-vintage-secondary:hover {
   background: #0a1628;
   color: #e8eef5;
+}
+
+.btn-header {
+  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-xs uppercase tracking-widest rounded-sm transition-all md:px-6 md:text-sm;
+  background: #e8eef5;
+  color: #0a1628;
+  border: 2px solid #5ec8e8;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-header:hover {
+  background: #5ec8e8;
+  color: #0a1628;
+  border-color: #5ec8e8;
+}
+
+.btn-header:active {
+  transform: scale(0.98);
+}
+
+.btn-header:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Legacy aliases */

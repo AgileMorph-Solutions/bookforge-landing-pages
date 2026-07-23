@@ -17,9 +17,9 @@ const config: Config = {
           DEFAULT: "#4f797b",
           dark: "#3a5c5e",
         },
-        cream: "#e3dac9",
+        cream: "#f4f0e6",
         parchment: {
-          DEFAULT: "#d4c8b0",
+          DEFAULT: "#e8e2d4",
           dark: "#bdb092",
         },
         gold: {
