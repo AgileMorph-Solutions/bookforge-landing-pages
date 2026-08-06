@@ -11,6 +11,9 @@ x-landing-service: &landing-service
     dockerfile: docker/Dockerfile
   networks:
     - landing
+  dns:
+    - 1.1.1.1
+    - 8.8.8.8
 
 services:
   lost-american-memories:

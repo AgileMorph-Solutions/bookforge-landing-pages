@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "Sanity": {
+      "url": "https://mcp.sanity.io",
+      "type": "http"
+    }
+  },
+  "sanityProjects": {
+    "american-food-history": {
+      "projectId": "iji68mld",
+      "dataset": "production"
+    },
+    "forgotten-ways-to-make-money": {
+      "projectId": "2zvm6n87",
+      "dataset": "production"
+    },
+    "once-upon-a-british-time": {
+      "projectId": "mh7aketu",
+      "dataset": "production"
+    },
+    "british-nostalgia": {
+      "projectId": "n5gutrbv",
+      "dataset": "production"
+    },
+    "carlyfe": {
+      "projectId": "fgynawmf",
+      "dataset": "production"
+    },
+    "forgotten-american-skills": {
+      "projectId": "lp0hbjba",
+      "dataset": "production"
+    },
+    "forgotten-american-survival": {
+      "projectId": "ksy60hww",
+      "dataset": "production"
+    },
+    "forgotten-american-weapons": {
+      "projectId": "1gz3wplt",
+      "dataset": "production"
+    },
+    "lost-american-memories": {
+      "projectId": "pu1kusrz",
+      "dataset": "production"
+    },
+    "stop-wasting-stuff": {
+      "projectId": "x0a4syb1",
+      "dataset": "production"
+    }
+  }
+}

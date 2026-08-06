@@ -12,7 +12,6 @@ WORKDIR /app
 ARG SITE_DIR
 COPY --from=deps /app/node_modules ./node_modules
 COPY ${SITE_DIR}/ .
-RUN mkdir -p assets
 # NEXT_PUBLIC_* vars are inlined at build time. Merge shared Stripe keys with site .env.
 COPY .env.stripe ${SITE_DIR}/.env ./
 RUN cat .env.stripe .env > .env.merged && mv .env.merged .env && rm .env.stripe

@@ -77,6 +77,7 @@ export async function getProductsForLanding(): Promise<{
   bundle: Product;
 }> {
   if (!isSanityEnabled()) {
+    console.log("[Products] Sanity disabled, using local products");
     return {
       individualBooks: INDIVIDUAL_BOOKS,
       bundle: BUNDLE,
@@ -85,21 +86,28 @@ export async function getProductsForLanding(): Promise<{
 
   try {
     const products = await getSanityProducts();
+    console.log(`[Products] Fetched ${products.length} products from Sanity`);
+
     const bundle = products.find((product) => product.slug === "bundle");
     const individualBooks = products.filter((product) => product.slug !== "bundle");
 
+    console.log(`[Products] Found bundle: ${!!bundle}, individual books: ${individualBooks.length}`);
+
     if (!bundle) {
+      console.error("[Products] Sanity bundle product is missing. Available slugs:", products.map(p => p.slug).join(", "));
       throw new Error("Sanity bundle product is missing.");
     }
     if (individualBooks.length === 0) {
+      console.error("[Products] Sanity has no individual products");
       throw new Error("Sanity individual products are missing.");
     }
 
+    console.log("[Products] Successfully loaded products from Sanity");
     return { individualBooks, bundle };
   } catch (error) {
     console.warn(
-      "Unable to fetch Sanity products; using local product data.",
-      error
+      "[Products] Unable to fetch Sanity products; using local product data.",
+      error instanceof Error ? error.message : error
     );
     return {
       individualBooks: INDIVIDUAL_BOOKS,
