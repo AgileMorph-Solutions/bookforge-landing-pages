@@ -61,7 +61,9 @@ type ChannelConfig = {
   tagline: string;
   youtubeUrl: string;
   youtubeSubscribers: string;
-  currency: "usd" | "gbp";
+  currency: "usd" | "gbp" | "eur";
+  /** When set to "de", generated UI chrome (CTAs, FAQ, testimonials, eyebrows) is emitted in German. */
+  locale?: "en" | "de";
   bundlePrice: number;
   bundleCompareAt: number;
   bundleTitle: string;
@@ -89,6 +91,36 @@ type ChannelConfig = {
 
 function generateSiteContentSections(config: ChannelConfig): SiteContentSections {
   const readerCount = "4,820+";
+
+  if (config.locale === "de") {
+    return {
+      heroBadge: "Enthält alle 3 Kochbücher",
+      costEyebrow: "II. Was ein Teller kostet",
+      costHeadline: "Was ein Teller heute kostet — verglichen mit früher.",
+      costBody:
+        "Diese Küchen ernährten ganze Haushalte, als das Geld knapp war. Die Preise im Laden haben sich verändert. Die Mathematik des Streckens eines Vorratsschranks nicht.",
+      modernTitle: "Was 2026 zum Abendessen verkauft",
+      modernSubtitle: "Eine typische Woche, pro Teller",
+      vintageTitle: "Wie diese Kochbücher es auf den Teller bringen",
+      vintageSubtitle: "Dieselbe Woche, zu Hause gekocht",
+      costFooter:
+        "Das komplette Set kostet einmalig {price}. Oft weniger als eine einzige Woche Lieferdienst.",
+      whatsInsideBody:
+        "Hundertfünfzig Rezepte aus drei Kochbüchern. Jeder Eintrag trägt seine Entstehungszeit, ein passendes Bild, eine ungefähre Einkaufskosten-Angabe für heute und den stillen Küchentipp, der selten auf der getippten Rezeptkarte stand.",
+      previewHeadline: "Ein Vorgeschmack auf das, was in Ihrer Küche wartet.",
+      testimonialsEyebrow: "IV. Aus ihren Küchen",
+      testimonialsHeadline: "Was am Ende auf ihrem Tisch landete.",
+      testimonialsBody: `${readerCount} Leser. Drei Küchen. Drei verschiedene Gründe, warum sie geblieben sind.`,
+      faqHeadline: "Fragen, bevor Sie kochen.",
+      copyrightLine:
+        "Alle Rechte vorbehalten · Für die Köche, die das Abendessen auf den Tisch brachten und nie eine Rezeptkarte getippt haben.",
+      guaranteeHeadline: "Das Erster-Teller-Versprechen",
+      contentUnitLabel: "Rezepte",
+      successDownloadLabel: "Laden Sie Ihre Kochbücher unten herunter.",
+      productPdfDescription:
+        "Bezahltes Kochbuch-PDF. Die Website liefert dies ausschließlich über die geschützte Download-API aus.",
+    };
+  }
 
   const byTheme: Record<ChannelTheme, SiteContentSections> = {
     cookbook: {
@@ -311,11 +343,47 @@ function findPdf(folder: string, hint: string): string | undefined {
   return files.find((f) => f.toLowerCase().includes(lower.slice(0, 20)));
 }
 
-function priceSymbol(currency: "usd" | "gbp") {
-  return currency === "gbp" ? "£" : "$";
+function priceSymbol(currency: "usd" | "gbp" | "eur") {
+  if (currency === "gbp") return "£";
+  if (currency === "eur") return "€";
+  return "$";
+}
+
+/** German (de-DE) numbers use a comma decimal and a trailing € symbol, e.g. "9,99 €". */
+function fmtPrice(amount: number, currency: "usd" | "gbp" | "eur") {
+  if (currency === "eur") {
+    return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount);
+  }
+  return `${priceSymbol(currency)}${amount}`;
 }
 
 function generateProductsTs(config: ChannelConfig): string {
+  const isDe = config.locale === "de";
+  const bundleShortTitle = isDe ? "Komplettpaket" : "Complete Library";
+  const bundleThemes = isDe
+    ? ["Komplettsammlung", "Bestes Preis-Leistungs-Verhältnis"]
+    : ["Complete Collection", "Best Value"];
+  const bundleHighlights = isDe
+    ? [
+        "Alle drei Kochbücher in einem Kauf",
+        "Sofortiger PDF-Download auf jedem Gerät",
+        "Frei mit der Familie teilbar",
+        "Bundle-Preis — bester Wert",
+        "Lebenslanger Zugriff auf Ihren Download",
+      ]
+    : [
+        "All five guides in one purchase",
+        "Instant PDF download on any device",
+        "Share with family members freely",
+        "First Edition pricing — best value",
+        "Lifetime access to your download",
+      ];
+  const familyLicenseLabel = isDe ? "Familienlizenz" : "Family Sharing License";
+  const lifetimeUpdatesLabel = isDe
+    ? "Lebenslange Updates zur Erstausgabe"
+    : "First Edition Lifetime Updates";
+  const familyLicenseValue = config.currency === "gbp" ? 15 : config.currency === "eur" ? 17 : 19;
+  const lifetimeUpdatesValue = config.currency === "gbp" ? 17 : config.currency === "eur" ? 19 : 21;
   const slugs = config.books.map((b) => `"${b.slug}"`).join("\n  | ");
   const bookEntries = config.books
     .map(
@@ -357,7 +425,7 @@ export interface Product {
   themes: string[];
 }
 
-export const CHECKOUT_CURRENCY = "${config.currency}" as "usd" | "gbp";
+export const CHECKOUT_CURRENCY = "${config.currency}" as "usd" | "gbp" | "eur";
 
 export const INDIVIDUAL_BOOKS: Product[] = [
 ${bookEntries},
@@ -366,21 +434,15 @@ ${bookEntries},
 export const BUNDLE: Product = {
   slug: "bundle",
   title: ${JSON.stringify(config.bundleTitle)},
-  shortTitle: "Complete Library",
+  shortTitle: ${JSON.stringify(bundleShortTitle)},
   subtitle: ${JSON.stringify(config.bundleSubtitle)},
   price: ${config.bundlePrice},
   compareAt: ${config.bundleCompareAt},
   coverImage: "/images/covers/bundle.png",
   pdfFilename: "",
   recipeCount: ${config.books.length * 100},
-  themes: ["Complete Collection", "Best Value"],
-  highlights: [
-    "All five guides in one purchase",
-    "Instant PDF download on any device",
-    "Share with family members freely",
-    "First Edition pricing — best value",
-    "Lifetime access to your download",
-  ],
+  themes: ${JSON.stringify(bundleThemes)},
+  highlights: ${JSON.stringify(bundleHighlights)},
 };
 
 export const ALL_PRODUCTS: Product[] = [...INDIVIDUAL_BOOKS, BUNDLE];
@@ -390,6 +452,9 @@ export function getProductBySlug(slug: string): Product | undefined {
 }
 
 export function formatPrice(amount: number): string {
+  if (CHECKOUT_CURRENCY === "eur") {
+    return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount);
+  }
   return CHECKOUT_CURRENCY === "gbp" ? \`£\${amount}\` : \`$\${amount}\`;
 }
 
@@ -401,18 +466,29 @@ export function getBundleValueStack(
       label: b.shortTitle,
       value: b.compareAt,
     })),
-    { label: "Family Sharing License", value: ${config.currency === "gbp" ? 15 : 19} },
-    { label: "First Edition Lifetime Updates", value: ${config.currency === "gbp" ? 17 : 21} },
+    { label: ${JSON.stringify(familyLicenseLabel)}, value: ${familyLicenseValue} },
+    { label: ${JSON.stringify(lifetimeUpdatesLabel)}, value: ${lifetimeUpdatesValue} },
   ];
 }
 `;
 }
 
 function generateCopyTs(config: ChannelConfig): string {
-  const sym = priceSymbol(config.currency);
+  const isDe = config.locale === "de";
   const singleStart = Math.min(...config.books.map((b) => b.price));
   const singlesTotal = config.books.reduce((s, b) => s + b.price, 0);
   const sections = generateSiteContentSections(config);
+  const primaryCta = isDe ? "Zur Bibliothek" : "Get the Library";
+  const secondaryCta = isDe ? "Sammlung ansehen" : "Browse the collection";
+  const youtubeHeadline = isDe
+    ? "Basierend auf echter Recherche. Keine recycelten Listicles."
+    : "Built from real research. Not recycled listicles.";
+  const guaranteeBody = isDe
+    ? "Sie haben einen vollen Monat Zeit. Testen Sie die Kochbücher. Falls sie sich nicht auszahlen — eine E-Mail genügt für die volle Rückerstattung. Alle Bücher behalten Sie trotzdem. Keine Rücksendung. Kein Kleingedrucktes."
+    : "You get a full month. Try the guides. If they never earn their keep — one email gets a full refund. Keep every book. No returns. No fine print.";
+  const individualNote = isDe
+    ? `Nur ein Buch gewünscht? Einzelbücher starten bei ${fmtPrice(singleStart, config.currency)}. Alle drei einzeln zu kaufen summiert sich auf ${fmtPrice(singlesTotal, config.currency)} — deshalb greifen die meisten zum Komplettset für ${fmtPrice(config.bundlePrice, config.currency)}.`
+    : `Want only one volume? Singles start at ${priceSymbol(config.currency)}${singleStart}. Buying all five alone adds up to ${priceSymbol(config.currency)}${singlesTotal} — which is why most people take the full set at ${priceSymbol(config.currency)}${config.bundlePrice}.`;
 
   const previews = config.books.slice(0, 4).map((b, i) => ({
     name: b.shortTitle,
@@ -439,8 +515,8 @@ function generateCopyTs(config: ChannelConfig): string {
 export const heroCopy = {
   headline: ${JSON.stringify(config.hero.headline)},
   subheadline: ${JSON.stringify(config.hero.subheadline)},
-  primaryCta: "Get the Library",
-  secondaryCta: "Browse the collection",
+  primaryCta: ${JSON.stringify(primaryCta)},
+  secondaryCta: ${JSON.stringify(secondaryCta)},
 };
 
 export const costComparison = {
@@ -451,20 +527,19 @@ export const costComparison = {
 export const recipePreviews = ${JSON.stringify(previews, null, 2).replace(/"bookSlug": "([^"]+)"/g, 'bookSlug: "$1" as const')};
 
 export const youtubeSection = {
-  headline: "Built from real research. Not recycled listicles.",
+  headline: ${JSON.stringify(youtubeHeadline)},
   body: ${JSON.stringify(config.youtubeBody)},
 };
 
 export const guaranteeCopy = {
   headline: ${JSON.stringify(sections.guaranteeHeadline)},
-  body: "You get a full month. Try the guides. If they never earn their keep — one email gets a full refund. Keep every book. No returns. No fine print.",
+  body: ${JSON.stringify(guaranteeBody)},
 };
 
 export const orderCopy = {
   headline: ${JSON.stringify(config.orderHeadline)},
   subheadline: ${JSON.stringify(config.orderSubheadline)},
-  individualNote:
-    "Want only one volume? Singles start at ${sym}${singleStart}. Buying all five alone adds up to ${sym}${singlesTotal} — which is why most people take the full set at ${sym}${config.bundlePrice}.",
+  individualNote: ${JSON.stringify(individualNote)},
 };
 
 export const lastCallCopy = {
@@ -475,46 +550,120 @@ export const lastCallCopy = {
 }
 
 function generateFaqTs(config: ChannelConfig): string {
-  const sym = priceSymbol(config.currency);
+  const isDe = config.locale === "de";
+  const faqItems = isDe
+    ? [
+        {
+          question: "Sind das echte Rezepte oder nur nostalgischer Content?",
+          answer: `Echte Rezepte. Jedes Kochbuch ist für den Alltag geschrieben — Schritt-für-Schritt-Anleitungen, Zutatenlisten und Tipps, die Sie diese Woche noch nutzen können. ${config.name} baut auf derselben Recherche wie der YouTube-Kanal auf.`,
+        },
+        {
+          question: "Ich habe ein knappes Budget. Lohnt sich das Bundle?",
+          answer: `Das Bundle für ${fmtPrice(config.bundlePrice, config.currency)} spart Geld gegenüber dem Einzelkauf. Schon ein einziges Rezept aus dem Set macht sich oft innerhalb des ersten Monats bezahlt.`,
+        },
+        {
+          question: "Wie funktioniert der Download?",
+          answer:
+            "Nach der Zahlung erhalten Sie innerhalb einer Minute eine E-Mail mit den Download-Links. Die PDFs lassen sich auf Handy, Tablet oder Computer öffnen. Drucken Sie jede Seite, die Sie möchten.",
+        },
+        {
+          question: "Kann ich die Kochbücher mit der Familie teilen?",
+          answer:
+            "Ja — geben Sie die Dateien an Angehörige in Ihrem Haushalt weiter. Diese Kochbücher sind zum Gebrauch und Teilen gedacht.",
+        },
+        {
+          question: "Was, wenn es mir nicht gefällt?",
+          answer: `Volle Rückerstattung innerhalb von dreißig Tagen, eine E-Mail genügt. Jedes ${config.faqProductType} dürfen Sie trotzdem behalten.`,
+        },
+      ]
+    : [
+        {
+          question: "Are these practical guides or just nostalgia content?",
+          answer: `Practical. Every guide is written for real households — step-by-step instructions, checklists, and tips you can use this week. ${config.name} builds on the same research behind the YouTube channel.`,
+        },
+        {
+          question: "I'm on a tight budget. Is the bundle worth it?",
+          answer: `The bundle at ${priceSymbol(config.currency)}${config.bundlePrice} saves money versus buying each guide separately. Use even one tip from the set and it often pays for itself within the month.`,
+        },
+        {
+          question: "How does the download work?",
+          answer:
+            "After payment, you receive an email with download links within about a minute. PDFs open on phone, tablet, or computer. Print any page you want.",
+        },
+        {
+          question: "Can I share with family?",
+          answer:
+            "Yes — pass the files to relatives in your household. These guides are meant to be used and shared.",
+        },
+        {
+          question: "What if I change my mind?",
+          answer: `Thirty-day full refund with one email. You keep every ${config.faqProductType}.`,
+        },
+      ];
+
   return `export interface FAQItem {
   question: string;
   answer: string;
 }
 
-export const faqItems: FAQItem[] = [
-  {
-    question: "Are these practical guides or just nostalgia content?",
-    answer:
-      "Practical. Every guide is written for real households — step-by-step instructions, checklists, and tips you can use this week. ${config.name} builds on the same research behind the YouTube channel.",
-  },
-  {
-    question: "I'm on a tight budget. Is the bundle worth it?",
-    answer:
-      "The bundle at ${sym}${config.bundlePrice} saves money versus buying each guide separately. Use even one tip from the set and it often pays for itself within the month.",
-  },
-  {
-    question: "How does the download work?",
-    answer:
-      "After payment, you receive an email with download links within about a minute. PDFs open on phone, tablet, or computer. Print any page you want.",
-  },
-  {
-    question: "Can I share with family?",
-    answer:
-      "Yes — pass the files to relatives in your household. These guides are meant to be used and shared.",
-  },
-  {
-    question: "What if I change my mind?",
-    answer:
-      "Thirty-day full refund with one email. You keep every ${config.faqProductType}.",
-  },
-];
+export const faqItems: FAQItem[] = ${JSON.stringify(faqItems, null, 2)};
 `;
 }
 
 function generateTestimonialsTs(config: ChannelConfig): string {
+  const isDe = config.locale === "de";
   const b0 = config.books[0];
   const b1 = config.books[1];
   const b2 = config.books[2];
+
+  const testimonials = isDe
+    ? [
+        {
+          quote: `Ich habe zuerst ${b0.shortTitle} gekauft und hatte noch am selben Nachmittag Erfolg. Noch vor Ende der Woche das ganze Set bestellt.`,
+          author: "Sabine K.",
+          location: "München",
+          source: b0.title,
+          rating: 5,
+        },
+        {
+          quote: `Klar geschrieben, ohne Schnickschnack. Genau das, was ich von ${config.name} erwartet habe — nützlich ab der ersten Seite.`,
+          author: "Susanne B.",
+          location: "Hamburg",
+          source: b1.title,
+          rating: 5,
+        },
+        {
+          quote: `Das Bundle hat sich schneller ausgezahlt, als ich dachte. Allein ${b2.shortTitle} war den Kauf schon wert.`,
+          author: "Jürgen & Ingrid W.",
+          location: "Köln",
+          source: b2.title,
+          rating: 5,
+        },
+      ]
+    : [
+        {
+          quote: `I picked up ${b0.shortTitle} first and had results the same afternoon. Ordered the full library before the week was out.`,
+          author: "Robert M.",
+          location: "Phoenix, AZ",
+          source: b0.title,
+          rating: 5,
+        },
+        {
+          quote: `Clear, no-nonsense writing. Exactly what I expected from ${config.name} — useful from page one.`,
+          author: "Susan K.",
+          location: "Nashville, TN",
+          source: b1.title,
+          rating: 5,
+        },
+        {
+          quote: `The bundle paid for itself faster than I thought. ${b2.shortTitle} alone was worth the purchase.`,
+          author: "James & Linda W.",
+          location: "Columbus, OH",
+          source: b2.title,
+          rating: 5,
+        },
+      ];
+
   return `export interface Testimonial {
   quote: string;
   author: string;
@@ -523,43 +672,70 @@ function generateTestimonialsTs(config: ChannelConfig): string {
   rating: number;
 }
 
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "I picked up ${b0.shortTitle} first and had results the same afternoon. Ordered the full library before the week was out.",
-    author: "Robert M.",
-    location: "Phoenix, AZ",
-    source: ${JSON.stringify(b0.title)},
-    rating: 5,
-  },
-  {
-    quote:
-      "Clear, no-nonsense writing. Exactly what I expected from ${config.name} — useful from page one.",
-    author: "Susan K.",
-    location: "Nashville, TN",
-    source: ${JSON.stringify(b1.title)},
-    rating: 5,
-  },
-  {
-    quote:
-      "The bundle paid for itself faster than I thought. ${b2.shortTitle} alone was worth the purchase.",
-    author: "James & Linda W.",
-    location: "Columbus, OH",
-    source: ${JSON.stringify(b2.title)},
-    rating: 5,
-  },
-];
+export const testimonials: Testimonial[] = ${JSON.stringify(testimonials, null, 2)};
 `;
 }
 
 function patchSiteContent(projectDir: string, config: ChannelConfig) {
   const file = path.join(projectDir, "src/lib/site-content.ts");
   let content = readFileSync(file, "utf8");
-  const sym = priceSymbol(config.currency);
+  const isDe = config.locale === "de";
   const sections = generateSiteContentSections(config);
   const headlineParts = config.hero.headline.split(".");
   const headlineStart = headlineParts[0] + ".";
   const headlineEnd = headlineParts.length > 1 ? headlineParts.slice(1).join(".").trim() : "";
+
+  const chrome = isDe
+    ? {
+        countdownLabel: "First-Edition-Start",
+        countdownPrefix: "Aktion endet in",
+        navLibrary: "Die Bibliothek",
+        navInside: "Inhalt",
+        navOrder: "Bestellen",
+        navFaq: "FAQ",
+        libraryEyebrow: "I. Die Sammlung",
+        insideEyebrow: "III. In jedem Buch",
+        insideHeadline: "Im {price} Komplettset enthalten",
+        sourceEyebrow: "V. Die Quelle",
+        subscribersLabel: "Abonnenten",
+        viewsLabel: "Aufrufe",
+        researchLabel: "Recherche",
+        youtubeCtaLabel: "Auf YouTube ansehen",
+        purchaseCtaLabel: "Zur Bibliothek",
+        standEyebrow: "Unser Versprechen",
+        guaranteeNote: "★ Gilt für Einzelbücher und das Komplettset ★",
+        orderEyebrow: "VI. Jetzt bestellen",
+        trustLine: "Visa · Mastercard · Amex · Apple Pay",
+        faqEyebrow: "VII. Vor dem Kauf",
+        lastCallEyebrow: "★ Letzter Aufruf ★",
+        lastCallSpotsLine: `{spots} First-Edition-Plätze übrig, bevor das Set auf ${fmtPrice(config.bundlePrice, config.currency)} steigt.`,
+        lastCallCtaLabel: "Zur Bibliothek",
+      }
+    : {
+        countdownLabel: "First Edition Launch",
+        countdownPrefix: "Promo ends in",
+        navLibrary: "The Library",
+        navInside: "Inside",
+        navOrder: "Order",
+        navFaq: "FAQ",
+        libraryEyebrow: "I. The Collection",
+        insideEyebrow: "III. Inside Each Book",
+        insideHeadline: "Inside the {price} complete set",
+        sourceEyebrow: "V. Where It Comes From",
+        subscribersLabel: "Subscribers",
+        viewsLabel: "Views",
+        researchLabel: "Research",
+        youtubeCtaLabel: "Watch on YouTube",
+        purchaseCtaLabel: "Get the Library",
+        standEyebrow: "Our Stand",
+        guaranteeNote: "★ Covers single books and the full set ★",
+        orderEyebrow: "VI. Get Your Set",
+        trustLine: "Visa · Mastercard · Amex · Apple Pay",
+        faqEyebrow: "VII. Before You Buy",
+        lastCallEyebrow: "★ Last call ★",
+        lastCallSpotsLine: `{spots} First Edition spots left before the set moves to ${priceSymbol(config.currency)}${config.bundlePrice}.`,
+        lastCallCtaLabel: "Get the Library",
+      };
 
   content = content.replace(
     /export const fallbackSiteSettings: SiteSettingsContent = \{[\s\S]*?\n\};/,
@@ -577,15 +753,15 @@ function patchSiteContent(projectDir: string, config: ChannelConfig) {
   seoTitle: ${JSON.stringify(config.seoTitle)},
   seoDescription: ${JSON.stringify(config.seoDescription)},
   countdownBanner: {
-    label: "First Edition Launch",
-    prefix: "Promo ends in",
+    label: ${JSON.stringify(chrome.countdownLabel)},
+    prefix: ${JSON.stringify(chrome.countdownPrefix)},
   },
   navigation: {
     links: [
-      { href: "#library", label: "The Library" },
-      { href: "#inside", label: "Inside" },
-      { href: "#order", label: "Order" },
-      { href: "#faq", label: "FAQ" },
+      { href: "#library", label: ${JSON.stringify(chrome.navLibrary)} },
+      { href: "#inside", label: ${JSON.stringify(chrome.navInside)} },
+      { href: "#order", label: ${JSON.stringify(chrome.navOrder)} },
+      { href: "#faq", label: ${JSON.stringify(chrome.navFaq)} },
     ],
   },
   hero: {
@@ -599,7 +775,7 @@ function patchSiteContent(projectDir: string, config: ChannelConfig) {
     badge: ${JSON.stringify(sections.heroBadge)},
   },
   library: {
-    eyebrow: "I. The Collection",
+    eyebrow: ${JSON.stringify(chrome.libraryEyebrow)},
     headline: ${JSON.stringify(config.libraryHeadline)},
     body: ${JSON.stringify(config.libraryBody)},
   },
@@ -616,8 +792,8 @@ function patchSiteContent(projectDir: string, config: ChannelConfig) {
     footer: ${JSON.stringify(sections.costFooter)},
   },
   whatsInside: {
-    eyebrow: "III. Inside Each Book",
-    headline: "Inside the {price} complete set",
+    eyebrow: ${JSON.stringify(chrome.insideEyebrow)},
+    headline: ${JSON.stringify(chrome.insideHeadline)},
     body: ${JSON.stringify(sections.whatsInsideBody)},
   },
   recipePreviews: {
@@ -631,41 +807,41 @@ function patchSiteContent(projectDir: string, config: ChannelConfig) {
     items: testimonials,
   },
   youtube: {
-    eyebrow: "V. Where It Comes From",
+    eyebrow: ${JSON.stringify(chrome.sourceEyebrow)},
     headline: youtubeSection.headline,
     body: youtubeSection.body,
     stats: [
-      { value: siteConfig.youtubeSubscribers, label: "Subscribers" },
-      { value: "50M+", label: "Views" },
-      { value: "Expert", label: "Research" },
+      { value: siteConfig.youtubeSubscribers, label: ${JSON.stringify(chrome.subscribersLabel)} },
+      { value: "50M+", label: ${JSON.stringify(chrome.viewsLabel)} },
+      { value: "Expert", label: ${JSON.stringify(chrome.researchLabel)} },
     ],
-    youtubeCtaLabel: "Watch on YouTube",
-    purchaseCtaLabel: "Get the Library",
+    youtubeCtaLabel: ${JSON.stringify(chrome.youtubeCtaLabel)},
+    purchaseCtaLabel: ${JSON.stringify(chrome.purchaseCtaLabel)},
   },
   guarantee: {
-    eyebrow: "Our Stand",
+    eyebrow: ${JSON.stringify(chrome.standEyebrow)},
     headline: guaranteeCopy.headline,
     body: guaranteeCopy.body,
-    note: "★ Covers single books and the full set ★",
+    note: ${JSON.stringify(chrome.guaranteeNote)},
   },
   order: {
-    eyebrow: "VI. Get Your Set",
+    eyebrow: ${JSON.stringify(chrome.orderEyebrow)},
     headline: orderCopy.headline,
     subheadline: orderCopy.subheadline,
     individualNote: orderCopy.individualNote,
-    trustLine: "Visa · Mastercard · Amex · Apple Pay",
+    trustLine: ${JSON.stringify(chrome.trustLine)},
   },
   faq: {
-    eyebrow: "VII. Before You Buy",
+    eyebrow: ${JSON.stringify(chrome.faqEyebrow)},
     headline: ${JSON.stringify(sections.faqHeadline)},
     items: faqItems,
   },
   lastCall: {
-    eyebrow: "★ Last call ★",
+    eyebrow: ${JSON.stringify(chrome.lastCallEyebrow)},
     headline: lastCallCopy.headline,
     body: lastCallCopy.body,
-    spotsLine: "{spots} First Edition spots left before the set moves to ${sym}${config.bundlePrice}.",
-    ctaLabel: "Get the Library",
+    spotsLine: ${JSON.stringify(chrome.lastCallSpotsLine)},
+    ctaLabel: ${JSON.stringify(chrome.lastCallCtaLabel)},
   },
   footer: {
     tagline: ${JSON.stringify(config.footerTagline)},
@@ -776,6 +952,20 @@ function patchMigrateScript(projectDir: string, config: ChannelConfig) {
   writeFileSync(file, content);
 }
 
+function patchEntitlements(projectDir: string, config: ChannelConfig) {
+  const file = path.join(projectDir, "src/lib/entitlements.ts");
+  if (!existsSync(file)) return;
+  let content = readFileSync(file, "utf8");
+  const entries = config.books
+    .map((b) => `  ${JSON.stringify(b.slug)}: ${JSON.stringify(b.pdfBasename ?? slugifyPdf(b.slug))},`)
+    .join("\n");
+  content = content.replace(
+    /const DEFAULT_FILENAMES: Record<Exclude<ProductSlug, "bundle">, string> = \{[\s\S]*?\n\};/,
+    `const DEFAULT_FILENAMES: Record<Exclude<ProductSlug, "bundle">, string> = {\n${entries}\n};`
+  );
+  writeFileSync(file, content);
+}
+
 function patchProductSchema(projectDir: string, config: ChannelConfig) {
   const file = path.join(projectDir, "src/sanity/schemaTypes/product.ts");
   if (!existsSync(file)) return;
@@ -833,8 +1023,12 @@ function patchProductCard(projectDir: string) {
     "export function ProductCard({ product, featured = false, contentUnitLabel }: ProductCardProps)"
   );
   content = content.replace(
-    "{product.recipeCount} RECIPES",
+    /\{product\.recipeCount\} RECIPES/,
     "{product.recipeCount} {contentUnitLabel.toUpperCase()}"
+  );
+  content = content.replace(
+    /\{product\.recipeCount\} Recipes/,
+    "{product.recipeCount} {contentUnitLabel}"
   );
   writeFileSync(file, content);
 }
@@ -975,7 +1169,8 @@ function patchSanityLogoSupport(projectDir: string) {
         "<WhatsInside\n        content={homePage.whatsInside}\n        individualBooks={individualBooks}\n        bundle={bundle}\n        contentUnitLabel={siteSettings.contentUnitLabel}\n      />"
       );
     }
-    if (!page.match(/<Library[\s\S]*?contentUnitLabel=\{siteSettings\.contentUnitLabel\}/)) {
+    const libraryTag = page.match(/<Library[\s\S]*?\/>/)?.[0];
+    if (libraryTag && !libraryTag.includes("contentUnitLabel={siteSettings.contentUnitLabel}")) {
       page = page.replace(
         /<Library\s*\n\s*content=\{homePage\.library\}\s*\n\s*individualBooks=\{individualBooks\}\s*\n\s*bundle=\{bundle\}\s*\n\s*\/>/,
         "<Library\n        content={homePage.library}\n        individualBooks={individualBooks}\n        bundle={bundle}\n        contentUnitLabel={siteSettings.contentUnitLabel}\n      />"
@@ -1008,12 +1203,13 @@ function setupAssets(projectDir: string, booksFolder: string, config: ChannelCon
   if (coverImages[bundleSlot]) {
     copyFileSync(coverImages[bundleSlot], path.join(coversDir, "bundle.png"));
   }
-  if (coverImages[0]) {
-    copyFileSync(coverImages[0], path.join(imagesDir, "logo.png"));
-    copyFileSync(coverImages[0], path.join(imagesDir, "brand-seal-source.png"));
+  const logoSlot = bookSlots[0] ?? 0;
+  if (coverImages[logoSlot]) {
+    copyFileSync(coverImages[logoSlot], path.join(imagesDir, "logo.png"));
+    copyFileSync(coverImages[logoSlot], path.join(imagesDir, "brand-seal-source.png"));
     const iconPath = path.join(projectDir, "src/app/icon.png");
     mkdirSync(path.dirname(iconPath), { recursive: true });
-    copyFileSync(coverImages[0], iconPath);
+    copyFileSync(coverImages[logoSlot], iconPath);
   }
 
   for (const book of config.books) {
@@ -1043,6 +1239,7 @@ function bootstrapSite(config: ChannelConfig) {
   patchCheckoutRoute(projectDir);
   patchMigrateScript(projectDir, config);
   patchProductSchema(projectDir, config);
+  patchEntitlements(projectDir, config);
   patchSuccessContent(projectDir, config);
   patchHeroTexture(projectDir);
   patchWhatsInside(projectDir);
@@ -2349,6 +2546,113 @@ const CHANNELS: ChannelConfig[] = [
     libraryBody:
       "Side hustles, thrift habits, trade income, ledgers, and ingenuity — every guide built for real households that need cash, not course hype.",
     faqProductType: "guide",
+  },
+  {
+    slug: "kuche-von-fruher",
+    theme: "cookbook",
+    locale: "de",
+    booksFolder: "Kuche von Fruher",
+    name: "Küche von Früher",
+    tagline: "Ein Archiv deutscher Familienrezepte",
+    youtubeUrl: "https://www.youtube.com",
+    youtubeSubscribers: "—",
+    currency: "eur",
+    bundlePrice: 49.99,
+    bundleCompareAt: 104.97,
+    bundleTitle: "Das nostalgische Kochbuch-Bundle",
+    bundleSubtitle: "3 Kochbücher voller deutscher Klassiker — von Omas Arme-Leute-Küche bis zur Sonntagstafel",
+    books: [
+      {
+        slug: "omas-arme-leute-kueche",
+        title: "Omas Arme-Leute-Küche",
+        shortTitle: "Arme-Leute-Küche",
+        subtitle: "60 vergessene Rezepte, die eine ganze Familie für fast nichts satt machten",
+        price: 24.99,
+        compareAt: 34.99,
+        era: "Nachkriegszeit",
+        themes: ["Sparsam kochen", "Hausmannskost", "Kartoffeln"],
+        highlights: [
+          "60 vergessene Familienrezepte",
+          "Günstige Zutaten aus jeder Küche",
+          "Traditionelle Eintöpfe und Aufläufe",
+          "Für die ganze Familie gedacht",
+          "Deutsche Küche aus armen Zeiten",
+        ],
+      },
+      {
+        slug: "vergessene-gaststaetten-klassiker",
+        title: "Vergessene deutsche Gaststätten-Klassiker",
+        shortTitle: "Gaststätten-Klassiker",
+        subtitle: "50 beliebte Gerichte aus alten Gaststätten, Metzgereien, Bäckereien und Kantinen",
+        price: 24.99,
+        compareAt: 34.99,
+        era: "Gasthaus-Tradition",
+        themes: ["Schnitzel & Braten", "Gaststätten-Klassiker", "Deftige Küche"],
+        highlights: [
+          "50 Rezepte aus alten Gaststätten",
+          "Klassiker von Metzgerei bis Bäckerei",
+          "Kantinen-Gerichte neu entdeckt",
+          "Deftige Braten, Soßen und Beilagen",
+          "Authentische Gasthaus-Tradition",
+        ],
+      },
+      {
+        slug: "omas-sonntagstafel",
+        title: "Omas vergessene Sonntagstafel",
+        shortTitle: "Sonntagstafel",
+        subtitle: "50 deutsche Sonntagsessen, Festtagskuchen und Familienrezepte aus den 1950er- bis 1970er-Jahren",
+        price: 24.99,
+        compareAt: 34.99,
+        era: "1950er–1970er",
+        themes: ["Sonntagsbraten", "Festtagskuchen", "Familientradition"],
+        highlights: [
+          "50 Sonntags- und Festtagsrezepte",
+          "Aus den 1950er- bis 1970er-Jahren",
+          "Braten, Kuchen und Nachspeisen",
+          "Familienrezepte über Generationen",
+          "Für besondere Anlässe am Tisch",
+        ],
+      },
+    ],
+    hero: {
+      headline: "Die Gerichte, die Deutschland vergessen hat. Neu gekocht für Ihre Küche.",
+      subheadline:
+        "Drei Kochbücher voller deutscher Klassiker — von Omas Arme-Leute-Küche bis zur Sonntagstafel. Hundertfünfzig Rezepte, recherchiert und für heutige Küchen aufbereitet.",
+    },
+    youtubeBody:
+      "Küche von Früher sammelt die deutschen Familienrezepte, die sonst in Kladden und Rezeptkarten verschwunden wären. Dieses Archiv bringt sie in Ordnung — praktisch, druckbar und bereit für Ihre nächste Mahlzeit.",
+    seoTitle: "Küche von Früher — Deutsche Kochbuch-Sammlung",
+    seoDescription:
+      "Drei deutsche Kochbücher: Arme-Leute-Küche, Gaststätten-Klassiker und Omas Sonntagstafel. Sofortiger PDF-Download.",
+    footerTagline: "Deutsche Rezepte · Alte Traditionen · Echte Küche von Früher",
+    footerDisclaimer:
+      "Historische Rezepte, angepasst für heutige Küchen. Zutatenverfügbarkeit und Zubereitung können variieren.",
+    costModern: [
+      { label: "Restaurantbesuch (zwei Personen)", cost: "35–60 €" },
+      { label: "Lieferdienst-Bestellung", cost: "15–25 €" },
+      { label: "Fertiggericht aus dem Kühlregal", cost: "4–7 €" },
+      { label: "Gedrucktes Kochbuch (ein Thema)", cost: "20–30 €" },
+      { label: "Eine Woche auswärts essen", cost: "120 €+" },
+    ],
+    costVintage: [
+      { label: "Teller aus Omas Arme-Leute-Küche", cost: "~1,50 €" },
+      { label: "Sonntagsbraten aus dem Buch", cost: "~4 €" },
+      { label: "Gaststätten-Klassiker zu Hause", cost: "~3 €" },
+      { label: "Wocheneinkauf für alle drei Bücher", cost: "~25 €" },
+      { label: "Komplettes Bundle, einmalig", cost: "49,99 €" },
+    ],
+    orderHeadline: "Einmal 49,99 € zahlen. Für immer deutsche Klassiker kochen.",
+    orderSubheadline:
+      "Ihr Download-Link kommt innerhalb einer Minute per E-Mail. Öffnen Sie ihn auf jedem Gerät oder drucken Sie die Rezepte aus.",
+    orderIndividualNote: "",
+    lastCallHeadline: "Drei Kochbücher deutscher Geschichte. Eine Sammlung.",
+    lastCallBody:
+      "49,99 € für alle drei Kochbücher. Testen Sie sie diesen Monat — falls sie sich nicht lohnen, erhalten Sie per E-Mail eine volle Rückerstattung.",
+    libraryHeadline: "Drei Kochbücher. Hundertfünfzig vergessene deutsche Rezepte.",
+    libraryBody:
+      "Von Omas Arme-Leute-Küche bis zur Sonntagstafel — jedes Rezept recherchiert und für heutige Küchen aufbereitet.",
+    faqProductType: "Kochbuch",
+    coverSlotMap: { books: [1, 2, 3], bundle: 0 },
   },
 ];
 

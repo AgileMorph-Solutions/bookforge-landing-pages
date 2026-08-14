@@ -1,0 +1,342 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ede4d0;
+  background-image:
+    url("/images/textures/parchment-noise.svg"),
+    radial-gradient(ellipse at 15% 0%, rgba(232, 217, 195, 0.95) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 100%, rgba(184, 149, 62, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(26, 43, 68, 0.04) 0%, transparent 60%);
+  background-size: 180px 180px, 100% 100%, 100% 100%, 100% 100%;
+  color: #1a1510;
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+}
+
+.paper-texture {
+  background-color: #ede4d0;
+  background-image: url("/images/textures/parchment-noise.svg");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* ── Background textures ── */
+.bg-parchment-texture {
+  background-color: #e8d9c3;
+  background-image:
+    url("/images/textures/parchment-noise.svg"),
+    radial-gradient(ellipse at center, rgba(237, 228, 208, 0.65) 0%, transparent 70%);
+  background-size: 180px 180px, 100% 100%;
+}
+
+.bg-wood-surface {
+  background-color: #1a2b44;
+  background-image: none;
+}
+
+.bg-hero-texture,
+.bg-hero-texture {
+  background-color: #ede4d0;
+  background-image:
+    url("/images/textures/parchment-noise.svg"),
+    radial-gradient(ellipse at 75% 20%, rgba(139, 26, 26, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 80%, rgba(26, 43, 68, 0.08) 0%, transparent 50%);
+  background-size: 180px 180px, 100% 100%, 100% 100%;
+}
+
+/* ── Borders ── */
+.border-vintage {
+  border: 1px solid #b8953e;
+  box-shadow: none;
+}
+
+.border-vintage-top {
+  border-top: 1px solid #8b1a1a;
+  box-shadow: none;
+}
+
+.border-vintage-bottom {
+  border-bottom: 1px solid #8b1a1a;
+  box-shadow: none;
+}
+
+/* ── Section labels ── */
+.section-label {
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b1a1a;
+}
+
+.section-label::before,
+.section-label::after {
+  content: "★";
+  margin: 0 0.5rem;
+  font-size: 0.55rem;
+  opacity: 0.9;
+  color: #8b1a1a;
+}
+
+.section-title {
+  font-size: 1.875rem;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+.landing-prose {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(26, 43, 68, 0.78);
+}
+
+/* ── Headlines ── */
+.headline-vintage {
+  font-family: var(--font-libre-caslon), Georgia, serif;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #1a2b44;
+}
+
+.headline-vintage .accent-red {
+  color: #8b1a1a;
+  font-style: italic;
+}
+
+.headline-vintage .accent-navy {
+  color: #1a2b44;
+}
+
+/* ── Star / ornament divider ── */
+.star-divider,
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  color: #b8953e;
+  font-size: 1.1rem;
+}
+
+.star-divider::before,
+.star-divider::after,
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #b8953e, transparent);
+}
+
+/* ── Ribbon badge ── */
+.ribbon-badge {
+  display: inline-block;
+  background: #8b1a1a;
+  color: #ffffff;
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  position: relative;
+  clip-path: none;
+  box-shadow: 0 4px 10px rgba(26, 21, 16, 0.2);
+}
+
+/* ── Book lift / frames ── */
+.book-lift {
+  box-shadow:
+    0 18px 42px rgba(26, 43, 68, 0.24),
+    0 6px 16px rgba(92, 64, 48, 0.18);
+  transform: none;
+}
+
+.book-pedestal {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  position: relative;
+}
+
+.book-pedestal::after {
+  display: none;
+}
+
+.stitch-frame {
+  background: #e8d9c3;
+  border: 2px solid #b8953e;
+  padding: 0.65rem;
+  box-shadow: 0 22px 44px rgba(26, 43, 68, 0.2);
+}
+
+/* ── Buttons (LAM-inspired: flat, high contrast, clear hierarchy) ── */
+.btn-vintage {
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-sm uppercase tracking-widest rounded-sm transition-all;
+  background: #8b1a1a;
+  color: #ffffff;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-vintage:hover {
+  background: #6b1212;
+}
+
+.btn-vintage:active {
+  transform: scale(0.98);
+}
+
+.btn-vintage:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-vintage-secondary {
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-sm uppercase tracking-widest rounded-sm transition-all;
+  background: transparent;
+  color: #1a2b44;
+  border: 1px solid #1a2b44;
+  cursor: pointer;
+}
+
+.btn-vintage-secondary:hover {
+  background: #1a2b44;
+  color: #ede4d0;
+}
+
+.btn-header {
+  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body font-semibold text-xs uppercase tracking-widest rounded-sm transition-all md:px-6 md:text-sm;
+  background: #ede4d0;
+  color: #1a2b44;
+  border: 2px solid #b8953e;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-header:hover {
+  background: #b8953e;
+  color: #1a2b44;
+  border-color: #b8953e;
+}
+
+.btn-header:active {
+  transform: scale(0.98);
+}
+
+.btn-header:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cover-frame {
+  background: #e8d9c3;
+  border: 2px solid #b8953e;
+  padding: 0.65rem;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.18);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0.125rem;
+  background: #8b1a1a;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0.125rem;
+  background: transparent;
+  color: #1a2b44;
+  border: 1px solid #1a2b44;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* ── Cards ── */
+.card-parchment {
+  background-color: #e8d9c3;
+  background-image:
+    url("/images/textures/parchment-noise.svg"),
+    radial-gradient(ellipse at center, rgba(237, 228, 208, 0.55) 0%, transparent 70%);
+  background-size: 180px 180px, 100% 100%;
+  border: 1px solid #d4c4a8;
+  border-radius: 0.125rem;
+  box-shadow: 0 8px 28px rgba(26, 43, 68, 0.1);
+}
+
+.card {
+  @apply card-parchment;
+}
+
+.parchment-frame {
+  border: 2px solid #b8953e;
+  box-shadow: 0 8px 32px rgba(26, 43, 68, 0.14);
+}
+
+.cover-vintage {
+  filter: sepia(4%) saturate(1.05) contrast(1.03);
+}
+
+.price-stamp {
+  font-family: var(--font-libre-caslon), Georgia, serif;
+  color: #8b1a1a;
+  font-weight: 700;
+}
+
+.compare-stamp {
+  color: rgba(26, 43, 68, 0.4);
+  text-decoration: line-through;
+  font-size: 0.875rem;
+}
+
+.pill-vintage {
+  @apply inline-block text-xs font-body font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm;
+  background: #1a2b44;
+  color: #ede4d0;
+}
+
+.panel-certificate {
+  background-color: #1a2b44;
+  color: #ede4d0;
+  border: 1px solid #b8953e;
+  box-shadow: none;
+  border-radius: 0.125rem;
+  padding: 2rem 3rem;
+}

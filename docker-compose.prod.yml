@@ -156,6 +156,20 @@ services:
     ports:
       - "127.0.0.1:3010:3000"
 
+  kuche-von-fruher:
+    <<: *landing-service
+    container_name: landing-kuche-von-fruher
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        SITE_DIR: kuche-von-fruher
+    env_file:
+      - ./.env.stripe
+      - ./kuche-von-fruher/.env
+    ports:
+      - "127.0.0.1:3011:3000"
+
 networks:
   landing:
     driver: bridge

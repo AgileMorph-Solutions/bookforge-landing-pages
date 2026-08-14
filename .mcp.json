@@ -45,6 +45,10 @@
     "stop-wasting-stuff": {
       "projectId": "x0a4syb1",
       "dataset": "production"
+    },
+    "kuche-von-fruher": {
+      "projectId": "jnkwlwnc",
+      "dataset": "production"
     }
   }
 }

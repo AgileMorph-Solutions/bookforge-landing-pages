@@ -15,6 +15,7 @@ APEX_DOMAINS=(
   britishnostalgiastore.com
   onceuponabritishtime.com
   forgottenwaystomakemoney.com
+  kuechevonfrueher.de
 )
 
 for domain in "${APEX_DOMAINS[@]}"; do

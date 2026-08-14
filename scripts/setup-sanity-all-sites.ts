@@ -55,6 +55,7 @@ const SITES: SiteSanityConfig[] = [
     projectId: "2zvm6n87",
     projectName: "forgotten-ways-to-make-money",
   },
+  { slug: "kuche-von-fruher", projectId: "jnkwlwnc", projectName: "kuche-von-fruher" },
 ];
 
 function parseEnvFile(filePath: string): Record<string, string> {

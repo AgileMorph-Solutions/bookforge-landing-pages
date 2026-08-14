@@ -26,6 +26,8 @@ DOMAINS=(
   www.onceuponabritishtime.com
   forgottenwaystomakemoney.com
   www.forgottenwaystomakemoney.com
+  kuechevonfrueher.de
+  www.kuechevonfrueher.de
 )
 
 mkdir -p "$SSL_DIR"
