@@ -1,5 +1,3 @@
-import { access } from "fs/promises";
-import path from "path";
 import {
   ALL_PRODUCTS,
   BUNDLE,
@@ -174,41 +172,26 @@ export async function getProductDownloadAsset(
   }
 }
 
-async function localPdfExists(
-  slug: Exclude<ProductSlug, "bundle">
-): Promise<boolean> {
-  const book = INDIVIDUAL_BOOKS.find((item) => item.slug === slug);
-  if (!book?.pdfFilename) return false;
-
-  try {
-    await access(path.join(process.cwd(), "assets", book.pdfFilename));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
+/**
+ * PDFs are served exclusively from Sanity, so availability is a Sanity-only
+ * check: a product doc with an attached `pdfFile`.
+ */
 export async function isPdfAvailableForSlug(
   slug: Exclude<ProductSlug, "bundle">
 ): Promise<boolean> {
-  if (isSanityEnabled()) {
-    try {
-      const rows = await client.fetch<{ slug?: string; hasPdf?: boolean }[]>(
-        PRODUCTS_PDF_AVAILABILITY_QUERY,
-        {},
-        { cache: "no-store" }
-      );
-      const row = rows.find((item) => item.slug === slug);
-      if (row?.hasPdf) return true;
-    } catch (error) {
-      console.warn(
-        "Unable to check Sanity PDF availability; falling back to local.",
-        error
-      );
-    }
-  }
+  if (!isSanityEnabled()) return false;
 
-  return localPdfExists(slug);
+  try {
+    const rows = await client.fetch<{ slug?: string; hasPdf?: boolean }[]>(
+      PRODUCTS_PDF_AVAILABILITY_QUERY,
+      {},
+      { cache: "no-store" }
+    );
+    return rows.some((item) => item.slug === slug && item.hasPdf === true);
+  } catch (error) {
+    console.warn("Unable to check Sanity PDF availability.", error);
+    return false;
+  }
 }
 
 export async function validatePdfsAvailableForPurchase(

@@ -14,44 +14,44 @@ export const siteConfig = {
 
 export const heroCopy = {
   headline: "Forgotten ways to earn. Written down before the algorithms bury them.",
-  subheadline: "Five guides. Five hundred lessons in thrift, trade skill, and quiet ingenuity — side hustles, money habits, cash trades, ledgers, and resourceful income. Built from the same research behind Forgotten Ways to Make Money.",
+  subheadline: "Five guides, five hundred lessons — weekend side-hustles, $0-start service businesses, reselling, repeat-customer services, and flexible part-time income. Built from the same research behind Forgotten Ways to Make Money.",
   primaryCta: "Get the Library",
   secondaryCta: "Browse the collection",
 };
 
 export const costComparison = {
   modern: [{"label":"Online 'make money' course","cost":"$97–$497"},{"label":"Side-hustle coaching month","cost":"$200–$500"},{"label":"App subscriptions (year)","cost":"$120–$300"},{"label":"Bad gig that burns a weekend","cost":"Priceless time"},{"label":"Bookkeeping software (year)","cost":"$150+"}],
-  vintage: [{"label":"Paper ledger + thrift habit stack","cost":"~$5"},{"label":"First local trade offer","cost":"~$20 tools"},{"label":"Resale/scrap weekend play","cost":"~$0–$15"},{"label":"Cashflow checklist printouts","cost":"Included"},{"label":"Full 5-guide income library","cost":"$59"}],
+  vintage: [{"label":"First weekend service (tools you own)","cost":"~$5"},{"label":"First local service offer","cost":"~$20 tools"},{"label":"Resale / flip weekend play","cost":"~$0–$15"},{"label":"Launch checklists — printed","cost":"Included"},{"label":"Full 5-guide income library","cost":"$59"}],
 };
 
 export const recipePreviews = [
   {
-    "name": "Side-Hustle Playbook",
-    "era": "Side Income",
-    "detail": "Side Hustles",
-    bookSlug: "forgotten-side-hustle-playbook" as const,
-    "image": "/images/covers/forgotten-side-hustle-playbook.png"
+    "name": "100 Forgotten Side-Hustles",
+    "era": "Local Income",
+    "detail": "Weekend Services",
+    bookSlug: "forgotten-side-hustles" as const,
+    "image": "/images/covers/forgotten-side-hustles.png"
   },
   {
-    "name": "Thrift-to-Wealth Habits",
-    "era": "Thrift",
-    "detail": "Habits",
-    bookSlug: "thrift-to-wealth-habits" as const,
-    "image": "/images/covers/thrift-to-wealth-habits.png"
+    "name": "The $0 Start Business Playbook",
+    "era": "Service Business",
+    "detail": "Validate & Sell",
+    bookSlug: "zero-start-business-playbook" as const,
+    "image": "/images/covers/zero-start-business-playbook.png"
   },
   {
-    "name": "Old Trade Income Manual",
-    "era": "Trades",
-    "detail": "Trades",
-    bookSlug: "old-trade-income-manual" as const,
-    "image": "/images/covers/old-trade-income-manual.png"
+    "name": "The Junk-to-Cash Reselling Guide",
+    "era": "Reselling",
+    "detail": "Flip for Profit",
+    bookSlug: "junk-to-cash-reselling-guide" as const,
+    "image": "/images/covers/junk-to-cash-reselling-guide.png"
   },
   {
-    "name": "Ledger & Cashflow Guide",
-    "era": "Ledger",
-    "detail": "Bookkeeping",
-    bookSlug: "ledger-and-cashflow-guide" as const,
-    "image": "/images/covers/ledger-and-cashflow-guide.png"
+    "name": "The Boring Businesses Blueprint",
+    "era": "Repeat Revenue",
+    "detail": "Recurring Clients",
+    bookSlug: "boring-businesses-blueprint" as const,
+    "image": "/images/covers/boring-businesses-blueprint.png"
   }
 ];
 

@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { head } from "@vercel/blob";
-import { readFile } from "fs/promises";
-import path from "path";
 import {
   DOWNLOAD_ACCESS_COOKIE,
   isSlugEntitledInToken,
 } from "@/lib/download-token";
 import {
-  getPdfBlobPath,
   isValidDownloadSlug,
   type DownloadableSlug,
 } from "@/lib/entitlements";
@@ -16,7 +12,6 @@ import { getProductDownloadAsset } from "@/lib/products.server";
 import { verifySessionEntitlement } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
-/** Large cookbook PDFs (30–70MB) need a long-running function. */
 export const maxDuration = 60;
 
 function pdfFilenameFor(slug: string): string {
@@ -25,56 +20,13 @@ function pdfFilenameFor(slug: string): string {
   );
 }
 
-function pdfResponse(
-  body: BodyInit,
-  filename: string,
-  extraHeaders?: HeadersInit
-): NextResponse {
-  return new NextResponse(body, {
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${filename}"`,
-      "Cache-Control": "private, no-store",
-      ...extraHeaders,
-    },
-  });
-}
-
-async function getLocalPdfResponse(
-  slug: string,
-  filename: string
-): Promise<NextResponse | null> {
-  const book = INDIVIDUAL_BOOKS.find((b) => b.slug === slug);
-  if (!book?.pdfFilename) return null;
-
-  const localPath = path.join(process.cwd(), "assets", book.pdfFilename);
-  try {
-    const buffer = await readFile(localPath);
-    return pdfResponse(new Uint8Array(buffer), filename);
-  } catch {
-    return null;
-  }
-}
-
-/** Prefer a 302 to the public Vercel Blob URL — avoids buffering huge PDFs. */
-async function getVercelBlobPdfResponse(
-  slug: DownloadableSlug
-): Promise<NextResponse | null> {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) return null;
-
-  const blobPath = getPdfBlobPath(slug);
-  try {
-    const blob = await head(blobPath);
-    if (blob.url) {
-      return NextResponse.redirect(blob.url, 302);
-    }
-  } catch {
-    // Fall through
-  }
-  return null;
-}
-
-async function getSanityPdfResponse(
+/**
+ * The PDF is served exclusively from Sanity — redirect to its CDN URL with
+ * `?dl=` so the browser saves it as an attachment with a friendly name. A 302
+ * avoids streaming 30–70MB PDFs through the function. There is no local /
+ * bundled-asset fallback: if Sanity has no file for this slug we fail loudly.
+ */
+async function getSanityPdfRedirect(
   slug: DownloadableSlug,
   filename: string
 ): Promise<NextResponse | null> {
@@ -82,15 +34,11 @@ async function getSanityPdfResponse(
   if (!asset?.pdfUrl) return null;
 
   try {
-    const response = await fetch(asset.pdfUrl, { cache: "no-store" });
-    if (!response.ok || !response.body) return null;
-
-    const contentLength = response.headers.get("content-length");
-    return pdfResponse(response.body as BodyInit, asset.pdfFilename ?? filename, {
-      ...(contentLength ? { "Content-Length": contentLength } : {}),
-    });
+    const url = new URL(asset.pdfUrl);
+    url.searchParams.set("dl", asset.pdfFilename ?? filename);
+    return NextResponse.redirect(url.toString(), 302);
   } catch (error) {
-    console.error("Sanity PDF proxy failed:", error);
+    console.error("Sanity PDF redirect failed:", error);
     return null;
   }
 }
@@ -134,16 +82,12 @@ export async function GET(
   }
 
   const filename = pdfFilenameFor(slug);
-
-  const response =
-    (await getSanityPdfResponse(downloadSlug, filename)) ??
-    (await getVercelBlobPdfResponse(downloadSlug)) ??
-    (await getLocalPdfResponse(downloadSlug, filename));
+  const response = await getSanityPdfRedirect(downloadSlug, filename);
 
   if (!response) {
     return NextResponse.json(
-      { error: "PDF not found. Contact support." },
-      { status: 404 }
+      { error: "PDF unavailable in Sanity. Contact support." },
+      { status: 502 }
     );
   }
 

@@ -167,13 +167,13 @@ export interface HomePageContent {
 export const fallbackSiteSettings: SiteSettingsContent = {
   ...siteConfig,
   seoTitle: "Forgotten Ways to Make Money Library · 5 Income & Ingenuity Guides",
-  seoDescription: "Five income guides: forgotten side hustles, thrift-to-wealth habits, old trade income, ledgers, and ingenuity playbooks. Instant PDF download.",
+  seoDescription: "Five income guides: 100 forgotten side-hustles, a $0-start business playbook, junk-to-cash reselling, boring repeat-customer businesses, and an over-50 side-hustle handbook. Instant PDF download.",
   ogImage: BUNDLE.coverImage,
 };
 
 export const fallbackHomePage: HomePageContent = {
   seoTitle: "Forgotten Ways to Make Money Library · 5 Income & Ingenuity Guides",
-  seoDescription: "Five income guides: forgotten side hustles, thrift-to-wealth habits, old trade income, ledgers, and ingenuity playbooks. Instant PDF download.",
+  seoDescription: "Five income guides: 100 forgotten side-hustles, a $0-start business playbook, junk-to-cash reselling, boring repeat-customer businesses, and an over-50 side-hustle handbook. Instant PDF download.",
   countdownBanner: {
     label: "First Edition Launch",
     prefix: "Promo ends in",
@@ -199,12 +199,12 @@ export const fallbackHomePage: HomePageContent = {
   library: {
     eyebrow: "I. The Collection",
     headline: "Five guides. Five hundred forgotten ways to make money.",
-    body: "Side hustles, thrift habits, trade income, ledgers, and ingenuity — every guide built for real households that need cash, not course hype.",
+    body: "Weekend side-hustles, $0-start service businesses, reselling, repeat-customer services, and flexible part-time work — every guide built for real households that need cash, not course hype.",
   },
   costComparison: {
     eyebrow: "II. Income Costs",
     headline: "What earning more costs now versus then.",
-    body: "Earlier generations built income with thrift, trade skill, and quiet ingenuity — not subscription courses. Markets moved. The math of making money the hard way did not.",
+    body: "Earlier generations built income with local service, resourcefulness, and repeat customers — not subscription courses. Markets moved. The math of making money the hard way did not.",
     modernTitle: "How 2026 sells 'making money'",
     modernSubtitle: "Typical courses, apps, and side-hustle kits",
     vintageTitle: "How these guides teach earning",
@@ -216,7 +216,7 @@ export const fallbackHomePage: HomePageContent = {
   whatsInside: {
     eyebrow: "III. Inside Each Book",
     headline: "Inside the {price} complete set",
-    body: "Five hundred lessons across five guides. Each volume carries checklists, ledgers, step-by-step income plays, and the quiet thrift tip that rarely made a modern guru's funnel.",
+    body: "Five hundred lessons across five guides. Each volume carries checklists, worksheets, step-by-step income plays, and the practical detail that rarely made a modern guru's funnel.",
   },
   recipePreviews: {
     headline: "A preview of what's in your income library.",

@@ -9,26 +9,26 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "I picked up Side-Hustle Playbook first and had results the same afternoon. Ordered the full library before the week was out.",
+      "I picked up 100 Forgotten Side-Hustles first and had a paying job the same afternoon. Ordered the full library before the week was out.",
     author: "Robert M.",
     location: "Phoenix, AZ",
-    source: "The Forgotten Side-Hustle Playbook",
+    source: "100 Forgotten Side-Hustles",
     rating: 5,
   },
   {
     quote:
-      "Clear, no-nonsense writing. Exactly what I expected from Forgotten Ways to Make Money — useful from page one.",
+      "Clear, no-nonsense writing. Exactly what I expected from Forgotten Ways to Make Money — the $0 Start Business Playbook was useful from page one.",
     author: "Susan K.",
     location: "Nashville, TN",
-    source: "Thrift-to-Wealth Habits",
+    source: "The $0 Start Business Playbook",
     rating: 5,
   },
   {
     quote:
-      "The bundle paid for itself faster than I thought. Old Trade Income Manual alone was worth the purchase.",
+      "The bundle paid for itself faster than we thought. The Junk-to-Cash Reselling Guide alone was worth the purchase.",
     author: "James & Linda W.",
     location: "Columbus, OH",
-    source: "The Old Trade Income Manual",
+    source: "The Junk-to-Cash Reselling Guide",
     rating: 5,
   },
 ];

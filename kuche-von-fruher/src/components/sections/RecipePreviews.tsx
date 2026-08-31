@@ -14,7 +14,7 @@ export function RecipePreviews({ content }: RecipePreviewsProps) {
         <h2 className="text-center font-display text-3xl font-bold text-cream">
           {content.headline}
         </h2>
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {content.items.map((preview) => (
             <article
               key={preview.name}

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 # Install landing-site nginx vhosts on the host (does not modify the BookForge app config).
+# WARNING: this installs docker/nginx/bookforge-landing.conf verbatim, including its
+# certbot-managed ssl_certificate paths. If that file is out of sync with the live
+# /etc/nginx/sites-enabled/bookforge-landing (e.g. certbot ran again since it was last
+# copied back to git), running this will revert already-secured domains to the
+# placeholder self-signed cert. Sync it first if unsure:
+#   sudo cat /etc/nginx/sites-enabled/bookforge-landing > docker/nginx/bookforge-landing.conf
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
